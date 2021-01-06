@@ -14,8 +14,15 @@ def inventario(request):
     return HttpResponse("inventario")
 
 def productos(request):
-    form = nuevo_producto_form()
-    return render(request, "store_project_app/productos.html", {'form':form})
+    if request.method == 'POST':
+        fm = nuevo_producto_form(request.POST)
+        if fm.is_valid():
+            fm.save()
+            fm = nuevo_producto_form()
+
+    else:
+        fm = nuevo_producto_form()
+    return render(request, "store_project_app/productos.html", {'form_producto':fm})
 
 
 

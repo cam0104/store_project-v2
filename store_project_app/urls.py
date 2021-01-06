@@ -7,6 +7,7 @@ urlpatterns = [
     path('estadisticas', views.estadisticas, name = "Estadisticas"),
     path('inventario', views.inventario, name = 'Inventario'),
     path('productos', views.productos, name = 'Productos'),
+    #path('categoria', views.categoria, name = 'Categoria'),
     
 
 

@@ -58,12 +58,15 @@ class Producto(models.Model):
     descripcion = models.CharField(max_length=100)
     stock = models.IntegerField()
     precio = models.IntegerField()
-    fecha_vencimiento = models.DateTimeField()
+    fecha_vencimiento = models.DateTimeField(blank=True,null=True)
 
 class Categoria(models.Model):
-    id_categoria = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=100)
+    id_categoria = models.AutoField(primary_key=True)
     descripcion = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.nombre
 
 class Metodo_Pago(models.Model):
     id_metodo_pago = models.IntegerField(primary_key=True)
