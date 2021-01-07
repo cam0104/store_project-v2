@@ -1,11 +1,11 @@
 from django import forms
 from .models import Producto
-#from .models import Categoria
+from .models import Categoria
 
 class nuevo_producto_form(forms.ModelForm):
     class Meta:
         model = Producto 
-        fields = ['id_categoria','nombre','descripcion','stock','precio','fecha_vencimiento']
+        fields = ['id_producto','id_categoria','nombre','descripcion','stock','precio','fecha_vencimiento']
         labels = {
             'id_categoria' : 'Categoria'
         }
