@@ -1,4 +1,5 @@
 from django.db import models
+from django.forms import ModelForm
 
 class Empleado(models.Model):
     id_empleado = models.AutoField(primary_key=True,blank=False)
@@ -22,8 +23,6 @@ class Venta(models.Model):
     forma_pago = models.ForeignKey('Metodo_Pago',on_delete=models.CASCADE)
     precio_total = models.IntegerField()
     
-
-
 class Cliente(models.Model):
     id_cliente = models.AutoField(primary_key=True,blank=False)
     cedula = models.CharField(max_length=12)
@@ -61,8 +60,8 @@ class Producto(models.Model):
     fecha_vencimiento = models.DateTimeField(blank=True,null=True)
 
 class Categoria(models.Model):
-    nombre = models.CharField(max_length=100)
     id_categoria = models.AutoField(primary_key=True)
+    nombre = models.CharField(max_length=100)
     descripcion = models.CharField(max_length=100)
 
     def __str__(self):

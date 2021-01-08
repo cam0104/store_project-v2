@@ -22,10 +22,8 @@
             </div>
             <div class="modal-body">
                 <form action="" method="POST" autocomplete="off">
-                    <!-- {% csrf_token %}
-            {{form_categoria|crispy}} -->
-
-
+                    {% csrf_token %}
+                    {{form_categoria|crispy}}
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>

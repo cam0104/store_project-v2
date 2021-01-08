@@ -1,6 +1,8 @@
 from django.shortcuts import render, HttpResponse, redirect, HttpResponseRedirect
 from .forms import nuevo_producto_form
-from .models import *
+from .forms import nueva_categoria_form
+from .models import Categoria
+from .models import Producto
 #from .forms import nueva_categoria_form
 
 def login(request):
@@ -14,6 +16,7 @@ def estadisticas(request):
 
 def inventario(request):
     return HttpResponse("inventario")
+
 
 def productos(request):
     if request.method == 'POST':
@@ -34,23 +37,30 @@ def delete_productos(request, id):
         producto.delete()
         return HttpResponseRedirect('/productos')
 
-def modificar_producto(request):
-    return render(request, "store_project_app/productos.html", {'id':id})
+def modificar_producto(request, id):
+    if request.method == 'POST':
+        pi = Producto.objects.get(pk=id)
+        fm = nuevo_producto_form(request.POST, instance=pi)
+        if fm.is_valid():
+            fm.save()
+    else:
+        pi = Producto.objects.get(pk=id)
+        fm = nuevo_producto_form(instance=pi)
+    return render(request, "store_project_app/productos.html", {'form':fm})
 
 
+def categoria(request):
+    if request.method == 'POST':
+        fm = nueva_categoria_form(request.POST)
+        if fm.is_valid():
+            fm.save()
+            return redirect('/categoria')
+            #fm = nuevo_producto_form()
 
-# def categoria(request):
-#     if request.method == 'POST':
-#         fm = nueva_categoria_form(request.POST)
-#         if fm.is_valid():
-#             fm.save()
-#             return redirect('/productos')
-#             #fm = nuevo_producto_form()
-
-#     else:
-#         fm = nueva_categoria_form()
-#         #productos = Producto.objects.all()
-#     return render(request, "store_project_app/productos.html", {'form_categoria':fm})
+    else:
+        fm = nueva_categoria_form()
+        #productos = Producto.objects.all()
+    return render(request, "store_project_app/categoria.html", {'form_categoria':fm})
 
 
 
