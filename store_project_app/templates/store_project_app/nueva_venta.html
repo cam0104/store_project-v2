@@ -1,0 +1,151 @@
+{% extends "store_project_app/base.html" %}
+{% load crispy_forms_tags %}
+
+
+
+{% block content %}
+
+<div class="container col-12">
+    <div class="row row-content">
+        <div class="col-12 col-sm-12">
+            <div class="card">
+                <h3 class="card-header bg-primary text-white">Registrar Nueva Venta</h3>
+                <div class="card-body">
+                    <dl class="row">
+                        <div class="col-12 col-md-3 ">
+                            {% csrf_token %}
+                            {{form_venta.id_empleado|as_crispy_field}}
+                        </div>
+
+                        <div class="col-12 col-md-3 offset-6">
+                            {% csrf_token %}
+                            {{form_venta.fecha_venta|as_crispy_field}}
+                        </div>
+                    </dl>
+                    <hr>
+                    <br>
+                    <div class="row">
+                        <div class="col-12 col-xs-12 col-md-3 ">
+                            {% csrf_token %}
+                            {{form_venta.id_cliente|as_crispy_field}}
+                        </div>
+                        <div class="col-xs-12 col-md-3 align-self-center">
+                            <button type="button" class="btn btn-primary">Agregar Cliente</button>
+                        </div>
+                        <div class="col-xs-12 col-md-3 offset-3 align-self-center">
+                            {% csrf_token %}
+                            {{form_venta.forma_pago|as_crispy_field}}
+                        </div>
+                    </div>
+                    <hr>
+                    <dl>
+
+                    </dl>
+
+                </div>
+            </div>
+            <br>
+
+            <div class="row">
+                
+                <div class="card shadow col-12 col-md-6">
+                    <div class="card-block">
+                        <div class="card-title-block">
+                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                <h6 class="m-0 font-weight-bold text-primary">Carrito de Ventas</h6>
+                            </div>
+                            <section class="example">
+                                {% if productos %}
+                                <div class="table-responsive">
+                                    <table id="example2" class="table table-striped table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">ID</th>
+                                                <th scope="col">Nombre</th>
+                                                <th scope="col">Descripción</th>
+                                                <th scope="col">Stock</th>
+                                                <th scope="col">Precio</th>
+                                                <th scope="col">Fecha de vencimiento</th>
+                                                <th scope="col">Acción</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for articulo in productos %}
+                                            <tr>
+                                                <th scope="row">{{articulo.id_producto}}</th>
+                                                <td>{{articulo.nombre}}</td>
+                                                <td>{{articulo.descripcion}}</td>
+                                                <td>{{articulo.stock}}</td>
+                                                <td>{{articulo.precio}}</td>
+                                                <td>{{articulo.stock.fecha_vencimiento}}</td>
+                                                <td>
+                                                    <form class="d-inline" action="#" method="POST"></form>
+                                                    <a href="{% url 'modificarProducto' articulo.id_producto %}"
+                                                        class="btn btn-primary btn-sm" data-toggle="modal"
+                                                        data-target="#modificarProducto">Agregar al Carrito</a>
+                                                    </form>
+                                                </td>
+
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                    {% endif %}
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card shadow col-12 col-md-6">
+                    <div class="card-block">
+                        <div class="card-title-block">
+                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                <h6 class="m-0 font-weight-bold text-primary">Productos</h6>
+                            </div>
+                            <section class="example">
+                                {% if productos %}
+                                <div class="table-responsive">
+                                    <table id="example2" class="table table-striped table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">ID</th>
+                                                <th scope="col">Nombre</th>
+                                                <th scope="col">Descripción</th>
+                                                <th scope="col">Stock</th>
+                                                <th scope="col">Precio</th>
+                                                <th scope="col">Fecha de vencimiento</th>
+                                                <th scope="col">Acción</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for articulo in productos %}
+                                            <tr>
+                                                <th scope="row">{{articulo.id_producto}}</th>
+                                                <td>{{articulo.nombre}}</td>
+                                                <td>{{articulo.descripcion}}</td>
+                                                <td>{{articulo.stock}}</td>
+                                                <td>{{articulo.precio}}</td>
+                                                <td>{{articulo.stock.fecha_vencimiento}}</td>
+                                                <td>
+                                                    <form class="d-inline" action="#" method="POST"></form>
+                                                    <a href="{% url 'modificarProducto' articulo.id_producto %}"
+                                                        class="btn btn-primary btn-sm" data-toggle="modal"
+                                                        data-target="#modificarProducto">Agregar al Carrito</a>
+                                                    </form>
+                                                </td>
+
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                    {% endif %}
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

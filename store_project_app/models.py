@@ -19,7 +19,7 @@ class Venta(models.Model):
     id_venta = models.AutoField(primary_key=True)
     id_cliente = models.ForeignKey('Cliente',on_delete=models.CASCADE)
     id_empleado = models.ForeignKey('Empleado',on_delete=models.CASCADE)
-    fecha = models.DateTimeField()
+    fecha_venta = models.DateTimeField()
     forma_pago = models.ForeignKey('Metodo_Pago',on_delete=models.CASCADE)
     precio_total = models.IntegerField()
     

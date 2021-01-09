@@ -1,6 +1,5 @@
 from django.shortcuts import render, HttpResponse, redirect, HttpResponseRedirect
-from .forms import nuevo_producto_form
-from .forms import nueva_categoria_form
+from .forms import *
 from .models import Categoria
 from .models import Producto
 #from .forms import nueva_categoria_form
@@ -8,8 +7,19 @@ from .models import Producto
 def login(request):
     return render(request,"store_project_app/login.html")
 
-def ventas(request):
-    return HttpResponse("ventas")
+def nueva_venta(request):
+    if request.method == 'POST':
+        fm = nueva_venta_form(request.POST)
+        if fm.is_valid():
+            fm.save()
+            return redirect('/nueva_venta')
+            #fm = nuevo_producto_form()
+
+    else:
+        fm = nueva_venta_form()
+    productos = Producto.objects.all()
+    return render(request, "store_project_app/nueva_venta.html", {'form_venta':fm, 'productos':productos})
+
 
 def estadisticas(request):
     return render(request,"store_project_app/estadisticas.html")
@@ -48,18 +58,14 @@ def modificar_producto(request, id):
         fm = nuevo_producto_form(instance=pi)
     return render(request, "store_project_app/productos.html", {'form':fm})
 
-
 def categoria(request):
     if request.method == 'POST':
         fm = nueva_categoria_form(request.POST)
         if fm.is_valid():
             fm.save()
             return redirect('/categoria')
-            #fm = nuevo_producto_form()
-
     else:
         fm = nueva_categoria_form()
-        #productos = Producto.objects.all()
     return render(request, "store_project_app/categoria.html", {'form_categoria':fm})
 
 

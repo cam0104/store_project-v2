@@ -44,7 +44,7 @@
       <div class="modal-body">
         <form action="" method="POST" autocomplete="off">
           {% csrf_token %}
-          {{form.as_p}}
+          {{form|crispy}}
 
       </div>
       <div class="modal-footer">
