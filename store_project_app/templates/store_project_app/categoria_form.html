@@ -1,0 +1,24 @@
+{% extends "store_project_app/body.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<form method="POST" action="">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">{{title}}</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                {% csrf_token %}
+                {{form|crispy}}
+            </div>
+        </div>
+        <div class="card-footer">
+            <input type="submit" class="btn btn-primary" value="Agregar Producto">
+        </div>
+    </div>
+</form>
+
+
+{% endblock %}

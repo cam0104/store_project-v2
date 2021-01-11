@@ -1,9 +1,9 @@
 from django.shortcuts import render, HttpResponse, redirect, HttpResponseRedirect
 from django.http import JsonResponse
-from django.views.generic import ListView
+from django.views.generic import ListView, CreateView
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-
+from django.urls import reverse_lazy, reverse
 from .forms import *
 from .models import Categoria
 from .models import Producto
@@ -75,10 +75,23 @@ class CategoriaListView(ListView):
             data['error'] = str(e) 
         return JsonResponse(data)
 
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Categoria'
+        return context
+
+class CategoriaCreateView(CreateView):
+    model = Categoria
+    form_class = nueva_categoria_form
+    template_name = 'store_project_app/categoria_form.html'
+    #success_url = reverse_lazy('store_project_app:categoria')
+
+    def get_success_url(self):
+        return reverse("AgregarCategoria")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Crear una Categoria'
         return context
 
 class ProductosListView(ListView):

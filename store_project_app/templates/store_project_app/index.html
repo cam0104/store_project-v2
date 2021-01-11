@@ -26,47 +26,51 @@
     <!-- Custom styles for this page -->
     <link href="{% static 'store_project_app/vendor/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="{% static 'store_project_app/vendor/jquery/jquery.min.js' %}"></script>
-    <script src="{% static 'store_project_app/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
-    <!-- Core plugin JavaScript-->
-    <script src="{% static 'store_project_app/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="{% static 'store_project_app/lib/js/sb-admin-2.min.js' %}"></script>
-
-    <script src="{% static 'store_project_app/vendor/datatables/jquery.dataTables.min.js' %}"></script>
-    <script src="{% static 'store_project_app/vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="{% static 'store_project_app/lib/js/demo/datatables-demo.js' %}"></script>
-
-    <script src="{% static 'store_project_app/lib/js/js.js' %}"></script>
 
 
 </head>
 
+
+
 {% block body %}
 {% endblock %}
- 
+
 {% block javascript %}
+
+<!-- Bootstrap core JavaScript-->
+<script src="{% static 'store_project_app/vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'store_project_app/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="{% static 'store_project_app/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="{% static 'store_project_app/lib/js/sb-admin-2.min.js' %}"></script>
+
+<script src="{% static 'store_project_app/vendor/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'store_project_app/vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
+
+<!-- Page level custom scripts -->
+<script src="{% static 'store_project_app/lib/js/demo/datatables-demo.js' %}"></script>
+
+<script src="{% static 'store_project_app/lib/js/js.js' %}"></script>
 
 <script>
     function myFunction() {
-    $.ajax({
-        url: "{% url 'Categoria' %}",
-        type: 'POST',
-        data: { id: 1 },
-        dataType: 'json '
-    }).done(function (data) {
-        console.log(data)
-    }).fail(function (data) {
-        alert("Error");
-    }).always(function (jqXHR,textStatus,errorThrown) {
-        alert("Completado");
-    })
-}
+        $.ajax({
+            url: "{% url 'Categoria' %}",
+            type: 'POST',
+            data: { id: 1 },
+            dataType: 'json '
+        }).done(function (data) {
+            console.log(data)
+        }).fail(function (data) {
+            alert("Error");
+        }).always(function (jqXHR, textStatus, errorThrown) {
+            alert("Completado");
+        })
+    }
 </script>
 
 {% endblock %}

@@ -9,9 +9,7 @@ urlpatterns = [
     # path('estadisticas', views.estadisticas, name = "Estadisticas"),
     # path('inventario', views.inventario, name = 'Inventario'),
     path('categoria', views.CategoriaListView.as_view(), name = 'Categoria'),
-
-    
-
+    path('agregar_categoria', views.CategoriaCreateView.as_view(), name = 'AgregarCategoria'),
 
 
     path('productos', views.ProductosListView.as_view(), name = 'Productos'),
