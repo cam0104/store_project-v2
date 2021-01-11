@@ -1,5 +1,9 @@
 from django.shortcuts import render, HttpResponse, redirect, HttpResponseRedirect
+from django.http import JsonResponse
 from django.views.generic import ListView
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
+
 from .forms import *
 from .models import Categoria
 from .models import Producto
@@ -20,10 +24,6 @@ from .models import Producto
 #         fm = nueva_venta_form()
 #     productos = Producto.objects.all()
 #     return render(request, "store_project_app/nueva_venta.html", {'form_venta':fm, 'productos':productos})
-
-
-def estadisticas(request):
-    return render(request,"store_project_app/estadisticas.html")
 
 def index(request):
     return render(request,"store_project_app/index.html")
@@ -59,17 +59,43 @@ def modificar_producto(request, id):
         fm = nuevo_producto_form(instance=pi)
     return render(request, "store_project_app/productos.html", {'form':fm})
 
-
-
 class CategoriaListView(ListView):
     model = Categoria
-    template_name = 'store_project_app/categoria.html'
+    template_name = 'store_project_app/categorias.html'
+
+    @csrf_exempt
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            data = Categoria.objects.get(pk=request.POST['id']).toJSON()
+        except Exception as e:
+            data['error'] = str(e) 
+        return JsonResponse(data)
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Categorias'
+        context['title'] = 'Categoria'
         return context
 
+class ProductosListView(ListView):
+    model = Producto
+    template_name = 'store_project_app/productos.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Producto'
+        return context
+
+def estadisticas(request):
+
+    data = {
+        'title' : 'Estadisticas'
+    }
+    return render(request,"store_project_app/estadisticas.html", data)
 
     # if request.method == 'POST':
     #     fm = nueva_categoria_form(request.POST)

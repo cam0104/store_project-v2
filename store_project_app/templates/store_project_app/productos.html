@@ -1,7 +1,7 @@
-{% extends "store_project_app/base.html" %}
+{% extends "store_project_app/listar.html" %}
 {% load crispy_forms_tags %}
 
-{% block content %}
+
 
 
 <div class="col-xs-12 col-md-3 ">
@@ -56,54 +56,47 @@
 
 <hr>
 
-<div class="limiter">
-  <div class="container-table100">
-    <div class="wrap-table100">
-      <div class="table100">
-        {% if productos %}
-        <table class="table table-hover">
-          <thead class="thead-dark">
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Nombre</th>
-              <th scope="col">Descripción</th>
-              <th scope="col">Stock</th>
-              <th scope="col">Precio</th>
-              <th scope="col">Fecha de vencimiento</th>
-              <th scope="col">Accion</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for articulo in productos %}
-            <tr>
-              <th scope="row">{{articulo.id_producto}}</th>
-              <td>{{articulo.nombre}}</td>
-              <td>{{articulo.descripcion}}</td>
-              <td>{{articulo.stock}}</td>
-              <td>{{articulo.precio}}</td>
-              <td>{{articulo.stock.fecha_vencimiento}}</td>
-              <td>
-                <form class="d-inline" action="#" method="POST"></form>
-                <a href="{% url 'modificarProducto' articulo.id_producto %}" class="btn btn-warning btn-sm" 
-                data-toggle="modal" data-target="#modificarProducto">Editar</a>
-                </form>
-                <form class="d-inline" action="{% url 'DeleteProducto' articulo.id_producto %}" method="POST">
-                  {% csrf_token %}
-                  <input class="btn btn-danger" type="submit" value="Delete">
-                </form>
-
-              </td>
-
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-        {% endif %}
-      </div>
-    </div>
-  </div>
-</div>
 
 
-
+{% block columns %}
+<tr>
+  <th scope="col">ID</th>
+  <th scope="col">Nombre</th>
+  <th scope="col">Descripción</th>
+  <th scope="col">Stock</th>
+  <th scope="col">Precio</th>
+  <th scope="col">Fecha de vencimiento</th>
+  <th scope="col">Accion</th>
+</tr>
 {% endblock %}
+
+{% block rows %}
+  {% for articulo in object_list %}
+  <tr>
+    <th scope="row">{{articulo.id_producto}}</th>
+    <td>{{articulo.nombre}}</td>
+    <td>{{articulo.descripcion}}</td>
+    <td>{{articulo.stock}}</td>
+    <td>{{articulo.precio}}</td>
+    <td>{{articulo.stock.fecha_vencimiento}}</td>
+    <td>
+      <form class="d-inline" action="#" method="POST"></form>
+      <a href="{% url 'modificarProducto' articulo.id_producto %}" class="btn btn-warning btn-sm" data-toggle="modal"
+        data-target="#modificarProducto">Editar</a>
+      </form>
+      <form class="d-inline" action="{% url 'DeleteProducto' articulo.id_producto %}" method="POST">
+        {% csrf_token %}
+        <input class="btn btn-danger" type="submit" value="Delete">
+      </form>
+
+    </td>
+
+  </tr>
+
+  {% endfor %}
+{% endblock %}
+
+
+
+
+
