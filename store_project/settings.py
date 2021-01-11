@@ -60,7 +60,7 @@ ROOT_URLCONF = 'store_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['store_project_app/templates/store_project_app'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
