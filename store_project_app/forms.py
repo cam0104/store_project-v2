@@ -21,6 +21,7 @@ class nueva_categoria_form(ModelForm):
         model = Categoria
         fields = '__all__'
 
+
 class nueva_venta_form(ModelForm):
 
     class Meta:
