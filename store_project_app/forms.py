@@ -21,6 +21,18 @@ class nueva_categoria_form(ModelForm):
         model = Categoria
         fields = '__all__'
 
+    def save(self, commit=True):
+        data = {}
+        form = super()
+        try:
+            if form.is_valid():
+                form.save() 
+            else:
+                data['error'] = form.errors
+        except Exception as e:
+            data['error'] = str(e)
+        return data
+
 
 class nueva_venta_form(ModelForm):
 

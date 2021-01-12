@@ -19,7 +19,7 @@
     <td>{{c.nombre}}</td>
     <td>{{c.descripcion}}</td>
     <td>
-        <a href="#" class="btn btn-warning btn-circle">
+        <a href="{% url 'EditarCategoria' c.id_categoria %}" class="btn btn-warning btn-circle">
             <i class="fas fa-edit"></i>
         </a>
         <a href="#" class="btn btn-danger btn-circle">

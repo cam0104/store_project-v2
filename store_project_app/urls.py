@@ -10,6 +10,7 @@ urlpatterns = [
     # path('inventario', views.inventario, name = 'Inventario'),
     path('categoria', views.CategoriaListView.as_view(), name = 'Categoria'),
     path('agregar_categoria', views.CategoriaCreateView.as_view(), name = 'AgregarCategoria'),
+    path('editar_categoria/<int:pk>/', views.CategoriaUpdateView.as_view(), name = 'EditarCategoria'),
 
 
     path('productos', views.ProductosListView.as_view(), name = 'Productos'),

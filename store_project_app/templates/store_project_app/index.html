@@ -33,6 +33,8 @@
 
 {% block javascript %}
 
+
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <!-- Bootstrap core JavaScript-->
 <script src="{% static 'store_project_app/vendor/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'store_project_app/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
@@ -51,22 +53,43 @@
 
 <script src="{% static 'store_project_app/lib/js/js.js' %}"></script>
 
-<!-- <script>
-    function myFunction() {
+<script>
+    
+    function mensaje_error(obj){
+    
+    $.each(obj, function(key,valor){
+        console.log(key);
+        console.log(valor);
+    });
+}
+    $('form').on('submit', function (e) {
+        e.preventDefault();
+        var parametros = $(this).serializeArray();
+        //console.log(parametros);
         $.ajax({
-            url: "{% url 'Categoria' %}",
+            url: window.location.pathname,
             type: 'POST',
-            data: { id: 1 },
+            data: parametros,
             dataType: 'json '
         }).done(function (data) {
-            console.log(data)
+            if (!data.hasOwnProperty('error')){
+                location.href = "{% url 'AgregarCategoria' %}"
+                return false;
+            }
+            mensaje_error(data.error);
         }).fail(function (data) {
             alert("Error");
         }).always(function (jqXHR, textStatus, errorThrown) {
             alert("Completado");
         })
-    }
-</script> -->
+
+    })
+</script>
+
+
+
+
+
 
 {% endblock %}
 

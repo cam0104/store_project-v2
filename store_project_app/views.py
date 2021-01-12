@@ -1,33 +1,22 @@
 from django.shortcuts import render, HttpResponse, redirect, HttpResponseRedirect
 from django.http import JsonResponse
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView,  UpdateView
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse_lazy, reverse
 from .forms import *
 from .models import Categoria
 from .models import Producto
-#from .forms import nueva_categoria_form
 
-# def login(request):
-#     return render(request,"store_project_app/login.html")
+def estadisticas(request):
 
-# def nueva_venta(request):
-#     if request.method == 'POST':
-#         fm = nueva_venta_form(request.POST)
-#         if fm.is_valid():
-#             fm.save()
-#             return redirect('/nueva_venta')
-#             #fm = nuevo_producto_form()
-
-#     else:
-#         fm = nueva_venta_form()
-#     productos = Producto.objects.all()
-#     return render(request, "store_project_app/nueva_venta.html", {'form_venta':fm, 'productos':productos})
+    data = {
+        'title' : 'Estadisticas'
+    }
+    return render(request,"store_project_app/estadisticas.html", data)
 
 def index(request):
     return render(request,"store_project_app/index.html")
-
 
 def productos(request):
     if request.method == 'POST':
@@ -59,6 +48,7 @@ def modificar_producto(request, id):
         fm = nuevo_producto_form(instance=pi)
     return render(request, "store_project_app/productos.html", {'form':fm})
 
+
 class CategoriaListView(ListView):
     model = Categoria
     template_name = 'store_project_app/categorias.html'
@@ -81,18 +71,71 @@ class CategoriaListView(ListView):
         return context
 
 class CategoriaCreateView(CreateView):
+    
     model = Categoria
     form_class = nueva_categoria_form
     template_name = 'store_project_app/categoria_form.html'
-    #success_url = reverse_lazy('store_project_app:categoria')
+    success_url = reverse_lazy("{% url 'AgregarCategoria' %}")
 
-    def get_success_url(self):
-        return reverse("AgregarCategoria")
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            action = request.POST['action']
+            if action == 'add':
+                form = self.get_form()
+                data = form.save()
+            else:
+                data['error'] = 'No ha ingresado a ninguna opción'
+        except Exception as e:
+            data['error'] = str(e) 
+        return JsonResponse(data)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Crear una Categoria'
         return context
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['action'] = 'add'
+        return context
+    
+
+
+
+
+class CategoriaUpdateView(UpdateView):
+    model = Categoria
+    form_class = nueva_categoria_form
+    template_name = 'store_project_app/categoria_form.html'
+    success_url = reverse_lazy("{% url 'Categoria' %}")
+
+    # def dispatch(self, request, *args, **kwargs):
+    #     object = self.get_object()
+    #     return super().dispatch(self, request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        data = {}
+        try:
+            action = request.POST['action']
+            if action == 'edit':
+                form = self.get_form()
+                data = form.save()
+            else:
+                data['error'] = 'No ha ingresado a ninguna opción'
+        except Exception as e:
+            data['error'] = str(e) 
+        return JsonResponse(data)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Editar una Categoría'
+        context['action'] = 'edit'
+        return context
+
+
+     
 
 class ProductosListView(ListView):
     model = Producto
@@ -103,29 +146,9 @@ class ProductosListView(ListView):
         context['title'] = 'Producto'
         return context
 
-def estadisticas(request):
 
-    data = {
-        'title' : 'Estadisticas'
-    }
-    return render(request,"store_project_app/estadisticas.html", data)
 
-    # if request.method == 'POST':
-    #     fm = nueva_categoria_form(request.POST)
-    #     if fm.is_valid():
-    #         fm.save()
-    #         return redirect('/categoria')
-    # else:
-    #     fm = nueva_categoria_form()
-    # return render(request, "store_project_app/categoria.html", {'form_categoria':fm})
 
-# def listarCategoria(request):
-#     data = {
-#         'title' : 'Listado de categorias',
-#         'categorias' : Categoria.objects.all()
-        
-#     }
-#     return render(request, "store_project_app/categoria.html", data)
 
 
 
