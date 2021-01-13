@@ -53,15 +53,19 @@
 
 <script src="{% static 'store_project_app/lib/js/js.js' %}"></script>
 
+<script src="{% static 'store_project_app/lib/js/js.js' %}"></script>
+
+<script src="{% static 'store_project_app/categoria/lista.js' %}"></script>>
+
 <script>
-    
-    function mensaje_error(obj){
-    
-    $.each(obj, function(key,valor){
-        console.log(key);
-        console.log(valor);
-    });
-}
+
+    function mensaje_error(obj) {
+
+        $.each(obj, function (key, valor) {
+            console.log(key);
+            console.log(valor);
+        });
+    }
     $('form').on('submit', function (e) {
         e.preventDefault();
         var parametros = $(this).serializeArray();
@@ -72,8 +76,8 @@
             data: parametros,
             dataType: 'json '
         }).done(function (data) {
-            if (!data.hasOwnProperty('error')){
-                location.href = "{% url 'AgregarCategoria' %}"
+            if (!data.hasOwnProperty('error')) {
+                location.href = "{% url 'Categoria' %}"
                 return false;
             }
             mensaje_error(data.error);
@@ -84,6 +88,50 @@
         })
 
     })
+</script>
+
+<script>
+    $(function () {
+
+        $('#dataTable').DataTable({
+            responsive: true,
+            autoWidth: false,
+            destroy: true,
+            deferRender: true,
+            ajax: {
+                url: window.location.pathname,
+                type: 'POST',
+                data: {
+                    'action': 'searchdata'
+                },
+                dataSrc: ""
+            },
+            columns: [
+                { "data": "id_categoria" },
+                { "data": "nombre" },
+                { "data": "descripcion" },
+                { "data": "botones" },
+
+
+            ],
+            columnDefs: [
+                {
+                    targets: [-1],
+                    class: 'text-center',
+                    orderable: false,
+                    render: function (data, type, row) {
+                        var botones = '<a href="editar_categoria/' + row.id_categoria + '/" class="btn btn-warning btn-circle"><i class="fas fa-edit"></i></a>';
+                        botones += '<a href="#" class="btn btn-danger btn-circle"><i class="fas fa-trash"></i></a>'
+                        return botones
+                    }
+                },
+            ],
+            initComplete: function (settings, json) {
+
+            }
+        });
+
+    });
 </script>
 
 

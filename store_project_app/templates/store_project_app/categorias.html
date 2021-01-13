@@ -1,5 +1,9 @@
 {% extends "store_project_app/listar.html" %}
 
+<!-- {% block head_lista %}
+
+{% endblock %} -->
+
 
 {% block columns %}
 
@@ -13,24 +17,5 @@
 
 {% block rows %}
 
-{% for c in object_list %}
-<tr>
-    <th scope="row">{{c.id_categoria}}</th>
-    <td>{{c.nombre}}</td>
-    <td>{{c.descripcion}}</td>
-    <td>
-        <a href="{% url 'EditarCategoria' c.id_categoria %}" class="btn btn-warning btn-circle">
-            <i class="fas fa-edit"></i>
-        </a>
-        <a href="#" class="btn btn-danger btn-circle">
-            <i class="fas fa-trash"></i>
-        </a>
-    </td>
-</tr>
-{% endfor %}
 
 {% endblock %}
-
-
-
-

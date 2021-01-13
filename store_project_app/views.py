@@ -1,6 +1,6 @@
 from django.shortcuts import render, HttpResponse, redirect, HttpResponseRedirect
 from django.http import JsonResponse
-from django.views.generic import ListView, CreateView,  UpdateView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView 
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse_lazy, reverse
@@ -60,10 +60,16 @@ class CategoriaListView(ListView):
     def post(self, request, *args, **kwargs):
         data = {}
         try:
-            data = Categoria.objects.get(pk=request.POST['id']).toJSON()
+            action = request.POST['action']
+            if action == 'searchdata':
+                data = []
+                for i in Categoria.objects.all():
+                    data.append(i.toJSON())
+            else:
+                data['error'] = 'Ha ocurrido un error'
         except Exception as e:
             data['error'] = str(e) 
-        return JsonResponse(data)
+        return JsonResponse(data, safe=False)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -93,22 +99,15 @@ class CategoriaCreateView(CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Crear una Categoria'
-        return context
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
         context['action'] = 'add'
         return context
+
     
-
-
-
-
 class CategoriaUpdateView(UpdateView):
     model = Categoria
     form_class = nueva_categoria_form
     template_name = 'store_project_app/categoria_form.html'
-    success_url = reverse_lazy("{% url 'Categoria' %}")
+    success_url = reverse_lazy('Categoria')
 
     # def dispatch(self, request, *args, **kwargs):
     #     object = self.get_object()
@@ -130,12 +129,21 @@ class CategoriaUpdateView(UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Editar una Categoría'
+        context['title'] = 'Editar Categoría'
         context['action'] = 'edit'
         return context
 
+class CategoriaDeleteView(DeleteView):
+    model = Categoria
+    template_name = 'store_project_app/categorias.html'
+    success_url = reverse_lazy('Categoria')
 
-     
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Crear una Categoria'
+        context['action'] = 'delete'
+        return context
+
 
 class ProductosListView(ListView):
     model = Producto
