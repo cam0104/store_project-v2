@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     'bootstrap4',
     'fontawesome',
     'crispy_forms',
+    'home_page',
+    'login',
+    'widget_tweaks',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -127,3 +130,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+LOGIN_REDIRECT_URL = '/categoria'

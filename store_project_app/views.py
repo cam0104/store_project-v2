@@ -1,6 +1,6 @@
 from django.shortcuts import render, HttpResponse, redirect, HttpResponseRedirect
 from django.http import JsonResponse
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView 
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, FormView
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse_lazy, reverse
@@ -14,40 +14,6 @@ def estadisticas(request):
         'title' : 'Estadisticas'
     }
     return render(request,"store_project_app/estadisticas.html", data)
-
-def index(request):
-    return render(request,"store_project_app/index.html")
-
-def productos(request):
-    if request.method == 'POST':
-        fm = nuevo_producto_form(request.POST)
-        if fm.is_valid():
-            fm.save()
-            return redirect('/productos')
-            #fm = nuevo_producto_form()
-
-    else:
-        fm = nuevo_producto_form()
-    productos = Producto.objects.all()
-    return render(request, "store_project_app/productos.html", {'form_producto':fm, 'productos':productos})
-
-def delete_productos(request, id):
-    if request.method == 'POST':
-        producto = Producto.objects.get(pk=id)
-        producto.delete()
-        return HttpResponseRedirect('/productos')
-
-def modificar_producto(request, id):
-    if request.method == 'POST':
-        pi = Producto.objects.get(pk=id)
-        fm = nuevo_producto_form(request.POST, instance=pi)
-        if fm.is_valid():
-            fm.save()
-    else:
-        pi = Producto.objects.get(pk=id)
-        fm = nuevo_producto_form(instance=pi)
-    return render(request, "store_project_app/productos.html", {'form':fm})
-
 
 class CategoriaListView(ListView):
     model = Categoria
@@ -102,7 +68,6 @@ class CategoriaCreateView(CreateView):
         context['action'] = 'add'
         return context
 
-    
 class CategoriaUpdateView(UpdateView):
     model = Categoria
     form_class = nueva_categoria_form
@@ -144,7 +109,6 @@ class CategoriaDeleteView(DeleteView):
         context['action'] = 'delete'
         return context
 
-
 class ProductosListView(ListView):
     model = Producto
     template_name = 'store_project_app/productos.html'
@@ -154,6 +118,28 @@ class ProductosListView(ListView):
         context['title'] = 'Producto'
         return context
 
+       
+
+# class CategoriaForm(FormView):
+#     form_class = nueva_categoria_form
+#     template_name = 'store_project_app/categoria_form.html'
+#     success_url = reverse_lazy('Categoria')
+
+#     def form_valid(self, form):
+
+#         return super().form_invalid(form)
+
+
+#     def form_invalid(self, form):
+
+#         print(form.errors)
+#         return super().form_invalid(form)
+
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['title'] = 'Form Categoria'
+#         context['action'] = 'add'
+#         return context
 
 
 
