@@ -1,10 +1,11 @@
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import redirect
 
 class LoginFormView(LoginView):
     template_name = 'login.html'
 
     def dispatch(self, request ,*args,**kwargs):
+        print(request.user)
         if request.user.is_authenticated:
             return redirect('/categoria')
         return super().dispatch(request, *args, **kwargs)

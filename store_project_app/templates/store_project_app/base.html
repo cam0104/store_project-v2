@@ -26,13 +26,45 @@
     <!-- Custom styles for this page -->
     <link href="{% static 'store_project_app/vendor/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
 
+    <!-- Favicons -->
+    <link href="{% static 'home_page/img/favicon.png' %}" rel="icon">
+    <link href="{% static 'home_page/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="{% static 'home_page/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'home_page/vendor/icofont/icofont.min.css' %}" rel="stylesheet">
+    <link href="{% static 'home_page/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+    <link href="{% static 'home_page/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+    <link href="{% static 'home_page/vendor/venobox/venobox.css' %}" rel="stylesheet">
+    <link href="{% static 'home_page\vendor\owl.carousel\assets\owl.carousel.min.css' %}" rel="stylesheet">
+    
+    <!-- Template Main CSS File -->
+    <link href="{% static 'home_page/css/style.css' %}" rel="stylesheet">
+
+
 </head>
+
+    <!-- Vendor JS Files -->
+    <script src="{% static 'home_page/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'home_page/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'home_page/vendor/jquery.easing/jquery.easing.min.js' %}"></script>
+    <script src="{% static 'home_page/vendor/php-email-form/validate.js' %}"></script>
+    <script src="{% static 'home_page/vendor/waypoints/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'home_page/vendor/counterup/counterup.min.js' %}"></script>
+    <script src="{% static 'home_page/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'home_page/vendor/venobox/venobox.min.js' %}"></script>
+    <script src="{% static 'home_page/vendor/owl.carousel/owl.carousel.min.js' %}"></script>
+
+    <!-- Template Main JS File -->
+    <script src="{% static 'home_page/js/main.js' %}"></script>
 
 {% block body %}
 {% endblock %}
-
-{% block javascript %}
-
 
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <!-- Bootstrap core JavaScript-->
@@ -57,7 +89,9 @@
 
 <script src="{% static 'store_project_app/categoria/lista.js' %}"></script>> -->
 
-<!-- <script>
+{% block js %}
+<!-- 
+<script>
 
     function mensaje_error(obj) {
 
@@ -133,11 +167,6 @@
 
     });
 </script>
-
-
-
-
-
 
 {% endblock %}
 

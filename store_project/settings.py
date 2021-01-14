@@ -132,3 +132,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = '/categoria'
+
+LOGOUT_REDIRECT_URL = '/login'
