@@ -1,0 +1,65 @@
+{% extends "store_project_app/body.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<form method="POST" action="" id="form">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">{{title}}</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="{{action}}">
+                {% if form.errors %}
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h5><i class="icon fas fa-ban"></i> Alerta</h5>
+                    <ul>
+                        {% for field in form %}
+                        {% for error in field.errors %}
+                        <li>
+                            {{error}}
+                        </li>
+
+                        {% endfor %}
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+                {{form|crispy}}
+            </div>
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">Agregar Producto</button>
+        </div>
+    </div>
+</form>
+
+
+{% endblock %}
+
+{% block js %}
+
+<script>
+
+    function mensaje_error(obj) {
+
+        $.each(obj, function (key, valor) {
+            console.log(key);
+            console.log(valor);
+        });
+    }
+    $('form').on('submit', function (e) {
+        e.preventDefault();
+        var parametros = $(this).serializeArray();
+
+        submit(window.location.pathname,parametros,function(){
+            location.href = "{% url 'Productos' %}"
+        })
+    });
+
+</script> 
+
+{% endblock %}
