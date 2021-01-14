@@ -7,7 +7,7 @@ class LoginFormView(LoginView):
     def dispatch(self, request ,*args,**kwargs):
         print(request.user)
         if request.user.is_authenticated:
-            return redirect('/categoria')
+            return redirect('/estadisticas')
         return super().dispatch(request, *args, **kwargs)
     
     def get_context_data(self, **kwargs):

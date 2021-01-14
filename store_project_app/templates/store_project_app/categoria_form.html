@@ -56,23 +56,12 @@
         e.preventDefault();
         var parametros = $(this).serializeArray();
         //console.log(parametros);
-        $.ajax({
-            url: window.location.pathname,
-            type: 'POST',
-            data: parametros,
-            dataType: 'json '
-        }).done(function (data) {
-            if (!data.hasOwnProperty('error')) {
-                location.href = "{% url 'Categoria' %}"
-                return false;
-            }
-            mensaje_error(data.error);
-        }).fail(function (data) {
-            alert("Error");
-        }).always(function (jqXHR, textStatus, errorThrown) {
-            alert("Completado");
-        })
 
-    })
+        submit(window.location.pathname, parametros, function(){
+            location.href = "{% url 'Categoria' %}";
+
+        });
+    });
+
 </script> 
 {% endblock %}

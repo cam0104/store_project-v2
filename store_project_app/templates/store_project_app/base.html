@@ -46,10 +46,12 @@
     <!-- Template Main CSS File -->
     <link href="{% static 'home_page/css/style.css' %}" rel="stylesheet">
 
+    <link href="{% static 'store_project_app/lib/jquery-confirm-v3.3.4/jquery-confirm.min.css' %}" rel="stylesheet">
+
 
 </head>
 
-    <!-- Vendor JS Files -->
+    <!-- Vendor JS Files
     <script src="{% static 'home_page/vendor/jquery/jquery.min.js' %}"></script>
     <script src="{% static 'home_page/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'home_page/vendor/jquery.easing/jquery.easing.min.js' %}"></script>
@@ -61,7 +63,7 @@
     <script src="{% static 'home_page/vendor/owl.carousel/owl.carousel.min.js' %}"></script>
 
     <!-- Template Main JS File -->
-    <script src="{% static 'home_page/js/main.js' %}"></script>
+    <script src="{% static 'home_page/js/main.js' %}"></script>-->
 
 {% block body %}
 {% endblock %}
@@ -83,46 +85,13 @@
 <!-- Page level custom scripts -->
 <script src="{% static 'store_project_app/lib/js/demo/datatables-demo.js' %}"></script>
 
-<script src="{% static 'store_project_app/lib/js/js.js' %}"></script>
+<script src="{% static 'store_project_app/lib/js/functions.js' %}"></script>
 
-<!-- <script src="{% static 'store_project_app/lib/js/js.js' %}"></script>
+<script src="{% static 'store_project_app/lib/jquery-confirm-v3.3.4/jquery-confirm.min.js' %}"></script>
 
-<script src="{% static 'store_project_app/categoria/lista.js' %}"></script>> -->
+
 
 {% block js %}
-<!-- 
-<script>
-
-    function mensaje_error(obj) {
-
-        $.each(obj, function (key, valor) {
-            console.log(key);
-            console.log(valor);
-        });
-    }
-    $('form').on('submit', function (e) {
-        e.preventDefault();
-        var parametros = $(this).serializeArray();
-        //console.log(parametros);
-        $.ajax({
-            url: window.location.pathname,
-            type: 'POST',
-            data: parametros,
-            dataType: 'json '
-        }).done(function (data) {
-            if (!data.hasOwnProperty('error')) {
-                location.href = "{% url 'Categoria' %}"
-                return false;
-            }
-            mensaje_error(data.error);
-        }).fail(function (data) {
-            alert("Error");
-        }).always(function (jqXHR, textStatus, errorThrown) {
-            alert("Completado");
-        })
-
-    })
-</script> -->
 
 <script>
     $(function () {

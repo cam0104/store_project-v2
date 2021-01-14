@@ -3,7 +3,7 @@ from store_project_app import views
 
 urlpatterns = [
 
-    path('estadisticas', views.estadisticas, name = 'Estadisticas'),
+    path('estadisticas', views.EstadisticasView.as_view(), name = 'Estadisticas'),
 
     path('categoria', views.CategoriaListView.as_view(), name = 'Categoria'),
     path('agregar_categoria', views.CategoriaCreateView.as_view(), name = 'AgregarCategoria'),

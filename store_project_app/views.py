@@ -2,24 +2,33 @@ from django.shortcuts import render, HttpResponse, redirect, HttpResponseRedirec
 from django.http import JsonResponse
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, FormView
 from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse_lazy, reverse
+from django.views.generic.base import TemplateView
 from .forms import *
 from .models import Categoria
 from .models import Producto
 
-def estadisticas(request):
 
-    data = {
-        'title' : 'Estadisticas'
-    }
-    return render(request,"store_project_app/estadisticas.html", data)
+class EstadisticasView(TemplateView):
+    template_name = 'estadisticas.html'
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context =  super().get_context_data(**kwargs)
+        context['panel'] = 'Panel de Administrador'
+        return context
 
 class CategoriaListView(ListView):
     model = Categoria
-    template_name = 'store_project_app/categorias.html'
+    template_name = 'categorias.html'
 
-    @csrf_exempt
+    @method_decorator(csrf_exempt)
+    @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
@@ -46,8 +55,12 @@ class CategoriaCreateView(CreateView):
     
     model = Categoria
     form_class = nueva_categoria_form
-    template_name = 'store_project_app/categoria_form.html'
+    template_name = 'categoria_form.html'
     success_url = reverse_lazy("{% url 'AgregarCategoria' %}")
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         data = {}
@@ -71,12 +84,12 @@ class CategoriaCreateView(CreateView):
 class CategoriaUpdateView(UpdateView):
     model = Categoria
     form_class = nueva_categoria_form
-    template_name = 'store_project_app/categoria_form.html'
+    template_name = 'categoria_form.html'
     success_url = reverse_lazy('Categoria')
 
-    # def dispatch(self, request, *args, **kwargs):
-    #     object = self.get_object()
-    #     return super().dispatch(self, request, *args, **kwargs)
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -100,8 +113,12 @@ class CategoriaUpdateView(UpdateView):
 
 class CategoriaDeleteView(DeleteView):
     model = Categoria
-    template_name = 'store_project_app/categorias.html'
+    template_name = 'categorias.html'
     success_url = reverse_lazy('Categoria')
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -109,37 +126,39 @@ class CategoriaDeleteView(DeleteView):
         context['action'] = 'delete'
         return context
 
+
 class ProductosListView(ListView):
+
     model = Producto
-    template_name = 'store_project_app/productos.html'
+    template_name = 'producto/productos.html'
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            action = request.POST['action']
+            if action == 'searchdata':
+                data = []
+                for i in Categoria.objects.all():
+                    data.append(i.toJSON())
+            else:
+                data['error'] = 'Ha ocurrido un error'
+        except Exception as e:
+            data['error'] = str(e) 
+        return JsonResponse(data, safe=False)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Producto'
         return context
 
+
        
 
-# class CategoriaForm(FormView):
-#     form_class = nueva_categoria_form
-#     template_name = 'store_project_app/categoria_form.html'
-#     success_url = reverse_lazy('Categoria')
 
-#     def form_valid(self, form):
-
-#         return super().form_invalid(form)
-
-
-#     def form_invalid(self, form):
-
-#         print(form.errors)
-#         return super().form_invalid(form)
-
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context['title'] = 'Form Categoria'
-#         context['action'] = 'add'
-#         return context
 
 
 
