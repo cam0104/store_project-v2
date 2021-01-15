@@ -1,3 +1,4 @@
+from store_project_app.mixins import IsSuperuserMixin
 from django.shortcuts import render, HttpResponse, redirect, HttpResponseRedirect
 from django.http import JsonResponse
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, FormView
@@ -23,7 +24,7 @@ class EstadisticasView(TemplateView):
         context['panel'] = 'Panel de Administrador'
         return context
 
-class CategoriaListView(ListView):
+class CategoriaListView(IsSuperuserMixin,ListView):
     model = Categoria
     template_name = 'categorias.html'
 
@@ -122,16 +123,16 @@ class CategoriaDeleteView(DeleteView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Crear una Categoria'
+        context['title'] = 'Eliminar una Categoria'
         context['action'] = 'delete'
         return context
-
 
 class ProductosListView(ListView):
 
     model = Producto
     template_name = 'producto/productos.html'
 
+    @method_decorator(csrf_exempt)
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
@@ -142,7 +143,7 @@ class ProductosListView(ListView):
             action = request.POST['action']
             if action == 'searchdata':
                 data = []
-                for i in Categoria.objects.all():
+                for i in Producto.objects.all():
                     data.append(i.toJSON())
             else:
                 data['error'] = 'Ha ocurrido un error'
@@ -152,7 +153,7 @@ class ProductosListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Producto'
+        context['title'] = 'Productos'
         return context
 
 

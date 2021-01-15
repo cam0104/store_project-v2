@@ -1,4 +1,5 @@
 {% extends "store_project_app/base.html" %}
+{% load static %}
 {% block body %}
 
 <body id="page-top">
@@ -6,14 +7,15 @@
     <div id="wrapper">
 
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
+            <br>
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
                 <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
+                    <img src="{% static 'store_project_app/lib/img/aston.png' %}">
+               
                 </div>
-                <div class="sidebar-brand-text mx-3">Nombre</div>
             </a>
-
+            <br>
+            <br>
             <hr class="sidebar-divider my-0">
 
             <li class="nav-item active">
@@ -75,11 +77,25 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseClientes"
+                    aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-users"></i>
-                    <span>Usuarios</span></a>
+                    <span>Clientes</span>
+                </a>
+                <div id="collapseClientes" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="#">Listado de Clientes</a>
+                        <a class="collapse-item" href="#">Nuevo Cliente</a>
+                    </div>
+                </div>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="fas fa-id-card"></i>
+                    <span>Usuarios</span></a>
+            </li>
+            
             <hr class="sidebar-divider d-none d-md-block">
 
             <div class="text-center d-none d-md-inline">
@@ -88,38 +104,15 @@
         </ul>
 
         <div id="content-wrapper" class="d-flex flex-column">
-
             <div id="content">
-
 
                 {% include 'header.html' %}
 
                 <div class="container-fluid">
 
                     {% block content %}
-
                     {% endblock %}
 
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="#">Logout</a>
                 </div>
             </div>
         </div>
@@ -128,6 +121,7 @@
     <a class="scroll-to-top rounded" href="#">
         <i class="fas fa-angle-up"></i>
     </a>
+    
 </body>
 
 {% endblock %}

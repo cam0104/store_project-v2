@@ -89,10 +89,8 @@ function submit(url,parametros,callback){
             },
         }
     })
-    
-
-
 }
+
 
 
 

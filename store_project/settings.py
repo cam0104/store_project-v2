@@ -56,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'crum.CurrentRequestUserMiddleware',
 ]
 
 ROOT_URLCONF = 'store_project.urls'
@@ -136,3 +137,5 @@ LOGIN_REDIRECT_URL = '/estadisticas'
 LOGOUT_REDIRECT_URL = '/login'
 
 LOGIN_URL = '/login'
+
+AUTH_USER_MODEL = 'auth.User'

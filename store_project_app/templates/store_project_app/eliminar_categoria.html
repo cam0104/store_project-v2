@@ -10,7 +10,6 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                {% csrf_token %}
                 <input type="hidden" name="action" value="{{action}}">
                 {% if form.errors %}
                 <div class="alert alert-danger alert-dismissible">
@@ -28,31 +27,12 @@
                     </ul>
                 </div>
                 {% endif %}
-                {{form|crispy}}
             </div>
+
         </div>
         <div class="card-footer">
-            <button type="submit" class="btn btn-primary">Agregar Producto</button>
+            <button type="submit" class="btn btn-primary">Si, aceptar</button>
         </div>
     </div>
 </form>
 
-
-{% endblock %}
-
-{% block js %}
-
-<script>
-
-    $('form').on('submit', function (e) {
-        e.preventDefault();
-        var parametros = $(this).serializeArray();
-
-        submit(window.location.pathname,parametros,function(){
-            location.href = "{% url 'Productos' %}"
-        })
-    });
-
-</script> 
-
-{% endblock %}

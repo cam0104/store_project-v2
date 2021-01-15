@@ -16,25 +16,16 @@
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-
-    <!-- Custom styles for this template-->
-    <link href="{% static 'store_project_app/lib/css/sb-admin-2.min.css' %}" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="{% static 'store_project_app/lib/css/sb-admin-2.min.css' %}" rel="stylesheet">
-
-    <!-- Custom styles for this page -->
-    <link href="{% static 'store_project_app/vendor/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
-
-    <!-- Favicons -->
-    <link href="{% static 'home_page/img/favicon.png' %}" rel="icon">
-    <link href="{% static 'home_page/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
-
     <!-- Google Fonts -->
     <link
-        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-        rel="stylesheet">
-
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
+    <!-- Custom styles for this template-->
+    <link href="{% static 'store_project_app/lib/css/sb-admin-2.min.css' %}" rel="stylesheet">
+    <link href="{% static 'store_project_app/lib/css/sb-admin-2.min.css' %}" rel="stylesheet">
+    <link href="{% static 'store_project_app/vendor/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
+    <link href="{% static 'home_page/img/favicon.png' %}" rel="icon">
+    <link href="{% static 'home_page/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
     <!-- Vendor CSS Files -->
     <link href="{% static 'home_page/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'home_page/vendor/icofont/icofont.min.css' %}" rel="stylesheet">
@@ -42,61 +33,39 @@
     <link href="{% static 'home_page/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
     <link href="{% static 'home_page/vendor/venobox/venobox.css' %}" rel="stylesheet">
     <link href="{% static 'home_page\vendor\owl.carousel\assets\owl.carousel.min.css' %}" rel="stylesheet">
-    
-    <!-- Template Main CSS File -->
     <link href="{% static 'home_page/css/style.css' %}" rel="stylesheet">
-
+    <!--JQuery Confirm-->
     <link href="{% static 'store_project_app/lib/jquery-confirm-v3.3.4/jquery-confirm.min.css' %}" rel="stylesheet">
 
 
 </head>
 
-    <!-- Vendor JS Files
-    <script src="{% static 'home_page/vendor/jquery/jquery.min.js' %}"></script>
-    <script src="{% static 'home_page/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'home_page/vendor/jquery.easing/jquery.easing.min.js' %}"></script>
-    <script src="{% static 'home_page/vendor/php-email-form/validate.js' %}"></script>
-    <script src="{% static 'home_page/vendor/waypoints/jquery.waypoints.min.js' %}"></script>
-    <script src="{% static 'home_page/vendor/counterup/counterup.min.js' %}"></script>
-    <script src="{% static 'home_page/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
-    <script src="{% static 'home_page/vendor/venobox/venobox.min.js' %}"></script>
-    <script src="{% static 'home_page/vendor/owl.carousel/owl.carousel.min.js' %}"></script>
-
-    <!-- Template Main JS File -->
-    <script src="{% static 'home_page/js/main.js' %}"></script>-->
-
 {% block body %}
 {% endblock %}
 
-<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-<!-- Bootstrap core JavaScript-->
-<script src="{% static 'store_project_app/vendor/jquery/jquery.min.js' %}"></script>
-<script src="{% static 'store_project_app/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <!-- Bootstrap core JavaScript-->
+    <script src="{% static 'store_project_app/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'store_project_app/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="{% static 'store_project_app/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="{% static 'store_project_app/lib/js/sb-admin-2.min.js' %}"></script>
+    <!--DataTables-->
+    <script src="{% static 'store_project_app/vendor/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'store_project_app/vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'store_project_app/lib/js/demo/datatables-demo.js' %}"></script>
+    <!--Jquery Confirm-->
+    <script src="{% static 'store_project_app/lib/jquery-confirm-v3.3.4/jquery-confirm.min.js' %}"></script>
 
-<!-- Core plugin JavaScript-->
-<script src="{% static 'store_project_app/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
-
-<!-- Custom scripts for all pages-->
-<script src="{% static 'store_project_app/lib/js/sb-admin-2.min.js' %}"></script>
-
-<script src="{% static 'store_project_app/vendor/datatables/jquery.dataTables.min.js' %}"></script>
-<script src="{% static 'store_project_app/vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
-
-<!-- Page level custom scripts -->
-<script src="{% static 'store_project_app/lib/js/demo/datatables-demo.js' %}"></script>
-
-<script src="{% static 'store_project_app/lib/js/functions.js' %}"></script>
-
-<script src="{% static 'store_project_app/lib/jquery-confirm-v3.3.4/jquery-confirm.min.js' %}"></script>
-
+    <script src="{% static 'store_project_app/lib/js/functions.js' %}"></script>
 
 
 {% block js %}
 
 <script>
-    
-    $(function () {
 
+    $(function () {
         $('#dataTable').DataTable({
             responsive: true,
             autoWidth: false,
@@ -115,8 +84,6 @@
                 { "data": "nombre" },
                 { "data": "descripcion" },
                 { "data": "botones" },
-
-
             ],
             columnDefs: [
                 {
@@ -131,10 +98,51 @@
                 },
             ],
             initComplete: function (settings, json) {
-
             }
         });
+    });
+</script>
 
+<script>
+    
+    $(function () {
+        $('#productos').DataTable({
+            responsive: true,
+            autoWidth: false,
+            destroy: true,
+            deferRender: true,
+            ajax: {
+                url: window.location.pathname,
+                type: 'POST',
+                data: {
+                    'action': 'searchdata'
+                },
+                dataSrc: ""
+            },
+            columns: [
+                { "data": "ID" },
+                { "data": "Nombre" },
+                { "data": "Descripción" },
+                { "data": "Categoría" },
+                { "data": "Stock" },
+                { "data": "Precio" },
+                { "data": "botones" },
+            ],
+            columnDefs: [
+                {
+                    targets: [-1],
+                    class: 'text-center',
+                    orderable: false,
+                    render: function (data, type, row) {
+                        // var botones = '<a href="editar_categoria/' + row.id_categoria + '/" class="btn btn-warning btn-circle"><i class="fas fa-edit"></i></a>';
+                        // botones += '<a href="#" class="btn btn-danger btn-circle"><i class="fas fa-trash"></i></a>'
+                        // return botones
+                    }
+                },
+            ],
+            initComplete: function (settings, json) {
+            }
+        });
     });
 </script>
 
