@@ -1,4 +1,5 @@
 {% extends "store_project_app/body.html" %}
+
 {% load crispy_forms_tags %}
 
 {% block content %}
@@ -9,7 +10,7 @@
   </div>
   <div class="card-body">
     <div class="table-responsive">
-      <table class="table table-bordered" id="productos" width="100%" cellspacing="0">
+      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
         <thead>
           {% block columns %}
           {% endblock %}
@@ -24,3 +25,7 @@
 </div>
 
 {% endblock %}
+
+
+
+

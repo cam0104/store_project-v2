@@ -13,9 +13,12 @@ $(function () {
             dataSrc: ""
         },
         columns: [
-            { "data": "id_categoria" },
-            { "data": "nombre" },
-            { "data": "descripcion" },
+            { "data": "ID" },
+            { "data": "Nombre" },
+            { "data": "Descripción" },
+            { "data": "Categoría" },
+            { "data": "Stock" },
+            { "data": "Precio" },
             { "data": "botones" },
         ],
         columnDefs: [
@@ -24,9 +27,9 @@ $(function () {
                 class: 'text-center',
                 orderable: false,
                 render: function (data, type, row) {
-                    var botones = '<a href="editar_categoria/' + row.id_categoria + '/" class="btn btn-warning btn-circle"><i class="fas fa-edit"></i></a>';
-                    botones += '<a href="#" class="btn btn-danger btn-circle"><i class="fas fa-trash"></i></a>'
-                    return botones
+                    // var botones = '<a href="editar_categoria/' + row.id_categoria + '/" class="btn btn-warning btn-circle"><i class="fas fa-edit"></i></a>';
+                    // botones += '<a href="#" class="btn btn-danger btn-circle"><i class="fas fa-trash"></i></a>'
+                    // return botones
                 }
             },
         ],
