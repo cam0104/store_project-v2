@@ -158,7 +158,6 @@ class ProductosListView(ListView):
         context['title'] = 'Listado de Productos'
         return context
 
-
 class ProductoCreateView(CreateView):
     
     model = Producto
@@ -188,6 +187,39 @@ class ProductoCreateView(CreateView):
         context['title'] = 'Añadir un producto'
         context['action'] = 'add'
         return context
+
+class ProductoUpdateView(UpdateView):
+    model = Producto
+    form_class = nuevo_producto_form
+    template_name = 'producto/producto_form.html'
+    success_url = reverse_lazy('Productos')
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        data = {}
+        try:
+            action = request.POST['action']
+            if action == 'edit':
+                form = self.get_form()
+                data = form.save()
+            else:
+                data['error'] = 'No ha ingresado a ninguna opción'
+        except Exception as e:
+            data['error'] = str(e) 
+        return JsonResponse(data)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Editar Producto'
+        context['action'] = 'edit'
+        return context
+
+
+
 
 
 class VentaCreateView(LoginRequiredMixin,ValidatePermissionRequiredMixin, CreateView):

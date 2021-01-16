@@ -27,7 +27,7 @@
                 class: 'text-center',
                 orderable: false,
                 render: function (data, type, row) {
-                    var botones = '<a href="editar_categoria/' + row.id_categoria + '/" class="btn btn-warning btn-circle"><i class="fas fa-edit"></i></a>';
+                    var botones = '<a href="editar_producto/' + row.id_producto + '/" class="btn btn-warning btn-circle"><i class="fas fa-edit"></i></a>';
                     botones += '<a href="#" class="btn btn-danger btn-circle"><i class="fas fa-trash"></i></a>'
                     return botones
                 }
