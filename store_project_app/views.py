@@ -119,9 +119,19 @@ class CategoriaDeleteView(DeleteView):
     template_name = 'eliminar_categoria.html'
     success_url = reverse_lazy('Categoria')
 
+    @method_decorator(csrf_exempt)
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
+
+    # def post(self, request, *args, **kwargs):
+    #     data = {}
+    #     try:
+    #         self.object.delete()
+    #     except Exception as e:
+    #         data['error'] = str(e)
+    #     return JsonResponse(data)
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
