@@ -1,4 +1,3 @@
-import store_project_app
 from store_project_app.mixins import IsSuperuserMixin, ValidatePermissionRequiredMixin
 from django.shortcuts import render, HttpResponse, redirect, HttpResponseRedirect
 from django.http import JsonResponse
@@ -7,7 +6,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse_lazy
 from django.views.generic.base import TemplateView
 from .forms import *
 from .models import Categoria
@@ -117,7 +116,7 @@ class CategoriaUpdateView(UpdateView):
 
 class CategoriaDeleteView(DeleteView):
     model = Categoria
-    template_name = 'categorias.html'
+    template_name = 'eliminar_categoria.html'
     success_url = reverse_lazy('Categoria')
 
     @method_decorator(login_required)
@@ -189,7 +188,6 @@ class ProductoCreateView(CreateView):
         context['title'] = 'Añadir un producto'
         context['action'] = 'add'
         return context
-
 
 
 class VentaCreateView(LoginRequiredMixin,ValidatePermissionRequiredMixin, CreateView):

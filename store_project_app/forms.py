@@ -42,21 +42,27 @@ class nueva_categoria_form(ModelForm):
 
 class nueva_venta_form(ModelForm):
 
-    # def __init(self, *args, **kwargs):
-    #     super().__init__(*args, **kwargs)
-    #     for form in self.visible_fields():
-    #         form.field.wi
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['fecha_venta'].widget.attrs = {
+            'readonly': True
+        }
+
+        self.fields['precio_total'].widget.attrs = {
+            'readonly': True
+        }
 
     class Meta:
         model = Venta
         fields = '__all__'
+        exclude = ['id_empleado']
         # widgets = {
         #     'id_cliente': widgets.Select(attrs={
         #         'class': 'form-control-select2',
         #         'style': 'width: 100%'
-        #     }), 
+        #     }),
 
         #     'fecha_venta': widgets.DateInput(format='%Y-%m-%d', attrs={'value': datetime.now().strftime('%Y-%m-%d'), }),
-
 
         # }
