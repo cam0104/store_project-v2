@@ -1,4 +1,5 @@
 {% extends "store_project_app/body.html" %}
+{% load static %}
 {% load crispy_forms_tags %}
 
 
@@ -26,3 +27,8 @@
 
 {% endblock %}
 
+{% block js %}
+
+<script src="{% static 'store_project_app/lib/js/lista_categoria.js' %}"></script>
+
+{% endblock %}

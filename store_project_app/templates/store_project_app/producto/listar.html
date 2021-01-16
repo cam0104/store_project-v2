@@ -1,5 +1,5 @@
 {% extends "store_project_app/body.html" %}
-
+{% load static %}
 {% load crispy_forms_tags %}
 
 {% block content %}
@@ -26,6 +26,10 @@
 
 {% endblock %}
 
+{% block js %}
 
+<script src="{% static 'store_project_app/lib/js/lista_productos.js' %}"></script>
+
+{% endblock %}
 
 
