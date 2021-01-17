@@ -7,19 +7,6 @@
         <i class="fa fa-bars"></i>
     </button>
 
-    <!-- Topbar Search -->
-    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-        <div class="input-group">
-            <input type="text" class="form-control bg-light border-0 small" placeholder="Buscar"
-                aria-label="Search" aria-describedby="basic-addon2">
-            <div class="input-group-append">
-                <button class="btn btn-primary" type="button">
-                    <i class="fas fa-search fa-sm"></i>
-                </button>
-            </div>
-        </div>
-    </form>
-
     <!-- Topbar Navbar -->
     <ul class="navbar-nav ml-auto">
 
@@ -46,19 +33,27 @@
             </div>
         </li>
 
-        <li class="nav-item dropdown no-arrow">
-            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" data-toggle="dropdown">
-                <i class=""></i>{{ request.user.username }}
-            </a>
-        </li>
-
-        <div class="topbar-divider d-none d-sm-block"></div>
-
-        <li class="nav-item dropdown no-arrow mx-1">
-            <a class="nav-link" href="{% url 'Logout' %}" role="button"
-                aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-sign-out-alt"></i>
-            </a>
-        </li>
+        <ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">
+            <li class="nav-item dropdown">
+              <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <div class="media align-items-center">
+                  <div class="media-body  ml-2  d-none d-lg-block">
+                    <span class="mb-0 text-sm  font-weight-bold">{{ request.user.get_full_name }}</span>
+                  </div>
+                </div>
+              </a>
+              <div class="dropdown-menu  dropdown-menu-right ">
+                <a href="#!" class="dropdown-item">
+                  <i class="ni ni-settings-gear-65"></i>
+                  <span>Settings</span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="{% url 'Logout' %}" class="dropdown-item">
+                  <i class="fas fa-sign-out-alt"></i>
+                  <span>Logout</span>
+                </a>
+              </div>
+            </li>
+          </ul>
     </ul>
 </nav>

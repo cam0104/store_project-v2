@@ -20,30 +20,31 @@
         rel="stylesheet">
     <!-- Google Fonts -->
     <link
-    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-    rel="stylesheet">
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
     <!-- Custom styles for this template-->
     <link href="{% static 'store_project_app/lib/css/sb-admin-2.min.css' %}" rel="stylesheet">
     <link href="{% static 'store_project_app/lib/css/sb-admin-2.min.css' %}" rel="stylesheet">
     <link href="{% static 'store_project_app/vendor/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
-
-    <link href="{% static 'home_page/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
     <!-- Vendor CSS Files -->
     <link href="{% static 'home_page/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'home_page/vendor/icofont/icofont.min.css' %}" rel="stylesheet">
     <link href="{% static 'home_page/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
     <link href="{% static 'home_page/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
     <link href="{% static 'home_page/vendor/venobox/venobox.css' %}" rel="stylesheet">
-    <link href="{% static 'home_page\vendor\owl.carousel\assets\owl.carousel.min.css' %}" rel="stylesheet">
+    <link href="{% static 'home_page/vendor/owl.carousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
     <link href="{% static 'home_page/css/style.css' %}" rel="stylesheet">
     <!--JQuery Confirm-->
     <link href="{% static 'store_project_app/lib/jquery-confirm-v3.3.4/jquery-confirm.min.css' %}" rel="stylesheet">
-</head>
+    <!--JQuery UI-->
+    <link href="{% static 'store_project_app/lib/jquery-ui-1.12.1/jquery-ui.min.css' %}" rel="stylesheet">
 
-{% block body %}
-{% endblock %}
+    <!-- jQuery !-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"> </script>
 
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <!-- Bootstrap core JavaScript-->
     <script src="{% static 'store_project_app/vendor/jquery/jquery.min.js' %}"></script>
     <script src="{% static 'store_project_app/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
@@ -59,8 +60,24 @@
     <script src="{% static 'store_project_app/lib/jquery-confirm-v3.3.4/jquery-confirm.min.js' %}"></script>
 
     <script src="{% static 'store_project_app/lib/js/functions.js' %}"></script>
-    
+    <script src="{% static 'store_project_app/lib/jquery-ui-1.12.1/jquery-ui.min.js' %}"></script>
+
+    <!--Touchspin-->
+    <script src="{% static 'store_project_app/lib/bootstrap-touchspin-4.3.0/jquery.bootstrap-touchspin.css' %}"></script>
+    <script src="{% static 'store_project_app/lib/bootstrap-touchspin-4.3.0/jquery.bootstrap-touchspin.js' %}"></script>
+
+
+
+</head>
+
+{% block body %}
+{% endblock %}
+
+
 {% block js %}
+
+
+
 
 {% endblock %}
 
