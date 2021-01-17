@@ -53,10 +53,15 @@ class nueva_venta_form(ModelForm):
             'readonly': True
         }
 
+        self.fields['id_empleado'].widget.attrs = {
+            'readonly': True
+        }
+
     class Meta:
         model = Venta
         fields = '__all__'
-        exclude = ['id_empleado']
+        exclude = ['creacion_user', 'actualizacion_usuario']
+                
         # widgets = {
         #     'id_cliente': widgets.Select(attrs={
         #         'class': 'form-control-select2',

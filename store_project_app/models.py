@@ -7,8 +7,11 @@ from crum import get_current_user
 
 
 class Metodo_Pago(models.Model):
-    id_metodo_pago = models.IntegerField(primary_key=True)
+    id_metodo_pago = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=50, verbose_name='Nombre')
+
+    def __str__(self):
+        return self.nombre
 
 
 class Rol(models.Model):
@@ -26,7 +29,7 @@ class Empleado(models.Model):
     telefono = models.CharField(max_length=100, verbose_name='Teléfono')
     correo_electronico = models.CharField(max_length=400, verbose_name='Email')
     genero = models.CharField(
-        max_length=10, default=None, verbose_name='Genero')
+        max_length=10, default=None, choices= (('M', 'Masculino'),('F', 'Femenino')), verbose_name='Genero')
 
 
 class Cliente(models.Model):
@@ -40,7 +43,7 @@ class Cliente(models.Model):
         max_length=10, default=None, verbose_name='Genero')
 
     def __str__(self):
-        return self.nombre
+        return str(self.id_cliente)
 
     class Meta:
         verbose_name = 'Cliente'
@@ -48,10 +51,10 @@ class Cliente(models.Model):
         ordering = ['id_cliente']
 
 
-class Venta(models.Model):
+class Venta(BaseModel):
     id_venta = models.AutoField(primary_key=True)
-    id_cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
-    id_empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE)
+    id_cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE,blank=True, null=True)
+    id_empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE,blank=True, null=True)
     fecha_venta = models.DateField(default=datetime.now)
     forma_pago = models.ForeignKey(Metodo_Pago, on_delete=models.CASCADE)
     precio_total = models.DecimalField(
@@ -66,8 +69,12 @@ class Venta(models.Model):
                 self.actualizacion_usuario = user
         super(Categoria, self).save()
 
+    def toJSON(self):
+        item = model_to_dict(self)
+        return item
 
-class Categoria(BaseModel):
+
+class Categoria(models.Model):
     id_categoria = models.AutoField(primary_key=True)
     nombre = models.CharField(
         max_length=100, verbose_name='Nombre', unique=True)

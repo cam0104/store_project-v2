@@ -21,29 +21,6 @@ function mensaje_error(obj) {
 }
 
 
-// $('form').on('submit', function (e) {
-//     e.preventDefault();
-//     var parametros = $(this).serializeArray();
-//     //console.log(parametros);
-//     $.ajax({
-//         url: window.location.pathname,
-//         type: 'POST',
-//         data: parametros,
-//         dataType: 'json '
-//     }).done(function (data) {
-//         if (!data.hasOwnProperty('error')) {
-//             location.href = "{% url 'Categoria' %}"
-//             return false;
-//         }
-//         mensaje_error(data.error);
-//     }).fail(function (data) {
-//         alert("Error");
-//     }).always(function (jqXHR, textStatus, errorThrown) {
-//         alert("Completado");
-//     })
-
-// })
-
 function submit(url,parametros,callback){
 
     $.confirm({
@@ -90,6 +67,8 @@ function submit(url,parametros,callback){
         }
     })
 }
+
+
 
 
 

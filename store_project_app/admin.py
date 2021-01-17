@@ -7,6 +7,7 @@ admin.site.register(Venta)
 admin.site.register(Empleado)
 admin.site.register(Rol)
 admin.site.register(Metodo_Pago)
+admin.site.register(Cliente)
 
 
 

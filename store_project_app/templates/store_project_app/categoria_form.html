@@ -57,11 +57,11 @@
         var parametros = $(this).serializeArray();
         //console.log(parametros);
 
-        submit(window.location.pathname, parametros, function(){
+        submit(window.location.pathname, parametros, function () {
             location.href = "{% url 'Categoria' %}";
 
         });
     });
 
-</script> 
+</script>
 {% endblock %}
