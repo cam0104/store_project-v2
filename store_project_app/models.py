@@ -1,3 +1,4 @@
+from django.contrib.auth.models import AbstractUser
 from store_project.models import BaseModel
 from django.db import models
 from django.forms import ModelForm
@@ -5,20 +6,16 @@ from django.forms import model_to_dict
 from datetime import datetime
 from crum import get_current_user
 
-
 class Metodo_Pago(models.Model):
     id_metodo_pago = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=50, verbose_name='Nombre')
 
     def __str__(self):
         return self.nombre
-
-
 class Rol(models.Model):
     id_rol = models.IntegerField(primary_key=True, blank=False)
     nombre = models.CharField(max_length=60, verbose_name='Nombre')
     descripcion = models.CharField(max_length=100, verbose_name='Descripción')
-
 
 class Empleado(models.Model):
     id_empleado = models.AutoField(primary_key=True, blank=False)
@@ -31,6 +28,9 @@ class Empleado(models.Model):
     genero = models.CharField(
         max_length=10, default=None, choices= (('M', 'Masculino'),('F', 'Femenino')), verbose_name='Genero')
 
+    
+    def __str__(self):
+        return str(self.id_empleado)
 
 class Cliente(models.Model):
     id_cliente = models.AutoField(primary_key=True, blank=False)
@@ -50,8 +50,7 @@ class Cliente(models.Model):
         verbose_name_plural = 'Clientes'
         ordering = ['id_cliente']
 
-
-class Venta(BaseModel):
+class Venta(models.Model):
     id_venta = models.AutoField(primary_key=True)
     id_cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE,blank=True, null=True)
     id_empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE,blank=True, null=True)
@@ -95,12 +94,10 @@ class Categoria(models.Model):
     def toJSON(self):
         item = model_to_dict(self)
         return item
-
     class Meta:
         verbose_name = 'Categoria'
         verbose_name_plural = 'Categorias'
         ordering = ['id_categoria']
-
 
 class Producto(models.Model):
     id_producto = models.AutoField(primary_key=True)
@@ -124,7 +121,6 @@ class Producto(models.Model):
         verbose_name_plural = 'Productos'
         ordering = ['id_producto']
 
-
 class Detalle_Venta(models.Model):
     id_detalle_venta = models.AutoField(primary_key=True)
     id_venta = models.ForeignKey(Venta, on_delete=models.CASCADE)
@@ -142,12 +138,10 @@ class Detalle_Venta(models.Model):
         verbose_name_plural = 'Detalle de Ventas'
         ordering = ['id_venta']
 
-
 class Compra(models.Model):
     id_compra = models.AutoField(primary_key=True)
     fecha = models.DateField(default=datetime.now)
     precio_total = models.IntegerField()
-
 
 class detalle_compra(models.Model):
     id_detalle_compra = models.AutoField(primary_key=True)
@@ -156,9 +150,10 @@ class detalle_compra(models.Model):
     cantidad = models.IntegerField()
     precio = models.IntegerField()
 
-
 class Historial_Pago(models.Model):
     id_historial = models.AutoField(primary_key=True)
     id_cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     fecha = models.DateTimeField()
     monto = models.IntegerField()
+
+

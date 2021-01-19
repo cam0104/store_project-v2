@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'home_page',
     'login',
     'widget_tweaks',
+
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

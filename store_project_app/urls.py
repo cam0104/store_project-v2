@@ -15,7 +15,12 @@ urlpatterns = [
     path('editar_producto/<int:pk>/', views.ProductoUpdateView.as_view(), name = 'EditarCategoria'),
 
     path('crear_venta', views.VentaCreateView.as_view(), name = 'Venta'),
+    path('ventas', views.VentaListView.as_view(), name = 'ListaVenta'),
 
+    path('factura_venta/<int:pk>/', views.VentaFacturaPdfView.as_view(), name = 'FacturaVenta'),
+
+
+    #path('usuarios', views.UsuarioListView.as_view(), name = 'Usuarios'),
 
 
 ]

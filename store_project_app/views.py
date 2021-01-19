@@ -1,7 +1,7 @@
 from store_project_app.mixins import IsSuperuserMixin, ValidatePermissionRequiredMixin
 from django.shortcuts import render, HttpResponse, redirect, HttpResponseRedirect
 from django.http import JsonResponse
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView, FormView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, FormView, View
 from django.utils.decorators import method_decorator
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.decorators import login_required
@@ -9,8 +9,16 @@ from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse_lazy
 from django.views.generic.base import TemplateView
 from .forms import *
+import json
 from .models import Categoria
 from .models import Producto
+
+import os
+from django.conf import settings
+from django.http import HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+from django.contrib.staticfiles import finders
 
 
 class EstadisticasView(TemplateView):
@@ -21,17 +29,15 @@ class EstadisticasView(TemplateView):
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        context =  super().get_context_data(**kwargs)
-        context['panel'] = 'Panel de Administrador'
+        context = super().get_context_data(**kwargs)
+        context['panel'] = 'Estadisticas'
         return context
-
-class CategoriaListView(LoginRequiredMixin,IsSuperuserMixin,ListView):
-
+class CategoriaListView(LoginRequiredMixin, IsSuperuserMixin, ListView):
     model = Categoria
     template_name = 'categorias.html'
 
     @method_decorator(csrf_exempt)
-    #@method_decorator(login_required) 
+    # @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
@@ -46,16 +52,15 @@ class CategoriaListView(LoginRequiredMixin,IsSuperuserMixin,ListView):
             else:
                 data['error'] = 'Ha ocurrido un error'
         except Exception as e:
-            data['error'] = str(e) 
+            data['error'] = str(e)
         return JsonResponse(data, safe=False)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Categoria'
         return context
-
 class CategoriaCreateView(CreateView):
-    
+
     model = Categoria
     form_class = nueva_categoria_form
     template_name = 'categoria_form.html'
@@ -75,7 +80,7 @@ class CategoriaCreateView(CreateView):
             else:
                 data['error'] = 'No ha ingresado a ninguna opción'
         except Exception as e:
-            data['error'] = str(e) 
+            data['error'] = str(e)
         return JsonResponse(data)
 
     def get_context_data(self, **kwargs):
@@ -83,7 +88,6 @@ class CategoriaCreateView(CreateView):
         context['title'] = 'Crear una Categoria'
         context['action'] = 'add'
         return context
-
 class CategoriaUpdateView(UpdateView):
     model = Categoria
     form_class = nueva_categoria_form
@@ -105,7 +109,7 @@ class CategoriaUpdateView(UpdateView):
             else:
                 data['error'] = 'No ha ingresado a ninguna opción'
         except Exception as e:
-            data['error'] = str(e) 
+            data['error'] = str(e)
         return JsonResponse(data)
 
     def get_context_data(self, **kwargs):
@@ -113,7 +117,6 @@ class CategoriaUpdateView(UpdateView):
         context['title'] = 'Editar Categoría'
         context['action'] = 'edit'
         return context
-
 class CategoriaDeleteView(DeleteView):
     model = Categoria
     template_name = 'eliminar_categoria.html'
@@ -132,12 +135,12 @@ class CategoriaDeleteView(DeleteView):
     #         data['error'] = str(e)
     #     return JsonResponse(data)
 
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Eliminar una Categoria'
         context['action'] = 'delete'
         return context
+
 
 class ProductosListView(ListView):
 
@@ -160,16 +163,15 @@ class ProductosListView(ListView):
             else:
                 data['error'] = 'Ha ocurrido un error'
         except Exception as e:
-            data['error'] = str(e) 
+            data['error'] = str(e)
         return JsonResponse(data, safe=False)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Listado de Productos'
         return context
-
 class ProductoCreateView(CreateView):
-    
+
     model = Producto
     form_class = nuevo_producto_form
     template_name = 'producto/producto_form.html'
@@ -189,7 +191,7 @@ class ProductoCreateView(CreateView):
             else:
                 data['error'] = 'No ha ingresado a ninguna opción'
         except Exception as e:
-            data['error'] = str(e) 
+            data['error'] = str(e)
         return JsonResponse(data)
 
     def get_context_data(self, **kwargs):
@@ -197,7 +199,6 @@ class ProductoCreateView(CreateView):
         context['title'] = 'Añadir un producto'
         context['action'] = 'add'
         return context
-
 class ProductoUpdateView(UpdateView):
     model = Producto
     form_class = nuevo_producto_form
@@ -219,7 +220,7 @@ class ProductoUpdateView(UpdateView):
             else:
                 data['error'] = 'No ha ingresado a ninguna opción'
         except Exception as e:
-            data['error'] = str(e) 
+            data['error'] = str(e)
         return JsonResponse(data)
 
     def get_context_data(self, **kwargs):
@@ -229,10 +230,7 @@ class ProductoUpdateView(UpdateView):
         return context
 
 
-
-
-
-class VentaCreateView(LoginRequiredMixin,ValidatePermissionRequiredMixin, CreateView):
+class VentaCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, CreateView):
     model = Venta
     form_class = nueva_venta_form
     template_name = 'venta/venta_form.html'
@@ -249,17 +247,38 @@ class VentaCreateView(LoginRequiredMixin,ValidatePermissionRequiredMixin, Create
         try:
             action = request.POST['action']
             if action == 'autocomplete':
-                productos = Producto.objects.filter(nombre__icontains=request.POST['term'])[0:10]
+                productos = Producto.objects.filter(
+                    nombre__icontains=request.POST['term'])[0:10]
                 for i in productos:
                     data = []
                     item = i.toJSON()
                     item['value'] = i.nombre
                     data.append(item)
+
+            #elif action == 'add':
+                #ventas = request.POST['ventas']
+                #ventas = json.loads(request.POST['ventas'])
+
+                #venta = Venta()
+                #venta.id_cliente = int(ventas['id_cliente'])
+                #venta.id_empleado = ventas['id_empleado']
+                # venta.fecha_venta = ventas['fecha_venta']
+                # venta.forma_pago = ventas['forma_pago']
+                # venta.precio_total = float(ventas['precio_total'])
+                #venta.save()
+
+                # for i in ventas['productos']:
+                #     detalle_venta = Detalle_Venta()
+                #     detalle_venta.id_detalle_venta = venta.id_venta
+                #     detalle_venta.id_producto = int(i['id_producto'])
+                #     detalle_venta.cantidad = int(i['cantidad'])
+                #     detalle_venta.subtotal = float(i['subtotal'])
+                #     detalle_venta.save()
             else:
                 data['error'] = 'No ha ingresado a ninguna opción'
         except Exception as e:
-            data['error'] = str(e) 
-        return JsonResponse(data,safe=False)
+            data['error'] = str(e)
+        return JsonResponse(data, safe=False)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -268,13 +287,84 @@ class VentaCreateView(LoginRequiredMixin,ValidatePermissionRequiredMixin, Create
         context['list_url'] = self.success_url
         context['action'] = 'add'
         return context
+class VentaListView(ListView):
+
+    model = Venta
+    template_name = 'venta/consultar_venta.html'
+
+    @method_decorator(csrf_exempt)
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            action = request.POST['action']
+            if action == 'searchdata':
+                data = []
+                for i in Venta.objects.all():
+                    data.append(i.toJSON())
+            else:
+                data['error'] = 'Ha ocurrido un error'
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data, safe=False)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Listado de Ventas'
+        return context
+class VentaFacturaPdfView(View):
+
+    def get(self, request, *args, **kwargs):
+        try:
+            template = get_template('venta/factura.html')
+            context = {
+                'venta': Venta.objects.get(pk=self.kwargs['pk'])
+            }
+            html = template.render(context)
+            response = HttpResponse(content_type='application/pdf')
+            response['Content-Disposition'] = 'attachment; filename="reporte.pdf"'
+            pisa_status = pisa.CreatePDF(
+                html, dest=response)
+            if pisa_status.err:
+                return HttpResponse('We had some errors <pre>' + html + '</pre>')
+            return response
+        except Exception as e:
+            return HttpResponseRedirect(reverse_lazy('ListaVenta'))
 
 
+# class UsuarioListView(LoginRequiredMixin, CreateView):
+#     model = User
+#     template_name = 'usuario.html'
+#     #permission_required = 'Empleado.view_empleado'
 
+#     @method_decorator(csrf_exempt)
+#     #@method_decorator(login_required)
+#     def dispatch(self, request, *args, **kwargs):
+#         return super().dispatch(request, *args, **kwargs)
 
+#     def post(self, request, *args, **kwargs):
+#         data = {}
+#         try:
+#             action = request.POST['action']
+#             if action == 'searchdata':
+#                 data = []
+#                 for i in User.objects.all():
+#                     data.append(i.toJSON())
+#             else:
+#                 data['error'] = 'Ha ocurrido un error'
+#         except Exception as e:
+#             data['error'] = str(e)
+#         return JsonResponse(data, safe=False)
 
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['title'] = 'Lista de Usuarios'
+#         return context
 
-
+     
 
 
 

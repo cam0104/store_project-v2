@@ -16,11 +16,8 @@ var ventas = {
         $.each(this.items.productos, function (pos, dict) {
             dict.subtotal = dict.cantidad * parseFloat(dict.precio)
             total += dict.subtotal;
-
-
         });
         this.items.precio_total = total;
-        //console.log(this.items.precio_total);
         $('input[name="precio_total"]').val(this.items.precio_total);
     },
 
@@ -125,7 +122,8 @@ function alerta(titulo, contenido, callback) {
             },
         }
     })
-}
+};
+
 
 $(function () {
 
@@ -189,8 +187,8 @@ $(function () {
     })
 
     //Registrar venta
-
     $('form').on('submit', function (e) {
+
         e.preventDefault();
 
         ventas.items.id_cliente = $('input[name="id_cliente"]').val();
@@ -198,16 +196,61 @@ $(function () {
         ventas.items.forma_pago = $('input[name="forma_pago"]').val();
         ventas.items.precio_total = $('input[name="precio_total"]').val();
 
-        
-
         var parametros = new FormData();
         parametros.append('action', $('input[name="action"]').val());
-        submit(window.location.pathname, parametros, function(){
-            location.href = "{% url 'Categoria' %}";
-
+        parametros.append('ventas', JSON.stringify(ventas.items));
+        enviar_productos(window.location.pathname, parametros, function () {
+            location.href = 'crear_venta';
         });
     });
-
-
-
 });
+
+function enviar_productos(url, parametros, callback) {
+        $.confirm({
+            theme: 'material',
+            title: 'Confirmación',
+            icon: 'fa fa-info',
+            content: '¿Estás seguro de realizar la siguiente acción',
+            columnClass: 'small',
+            typeAnimated: true,
+            cancelButtonClass: 'btn-primary',
+            draggable: true,
+            dragWindowBorder: false,
+            buttons: {
+                info: {
+                    text: "Si",
+                    btnClass: 'btn-primary',
+                    action: function () {
+                        $.ajax({
+                            url: url,
+                            type: 'POST',
+                            data: parametros,
+                            dataType: 'json',
+                            processData: false,
+                            contentType: false,
+                            // cache : false,
+                        }).done(function (data) {
+                            if (!data.hasOwnProperty('error')) {
+                                callback();
+                                return false;
+                            }
+                            mensaje_error(data.error);
+                        }).fail(function (jqXHR, textStatus, errorThrown) {
+                            alert(textStatus + ':' + errorThrown);
+                            var err = new Error();
+                            console.log(err.stack);
+                        }).always(function (jqXHR, textStatus, errorThrown) {
+    
+                        })
+                    }
+                },
+                danger: {
+                    text: "No",
+                    btnClass: 'btn-red',
+                    action: function () {
+    
+                    }
+                },
+            }
+        })
+    };

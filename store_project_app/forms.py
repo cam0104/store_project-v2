@@ -53,9 +53,7 @@ class nueva_venta_form(ModelForm):
             'readonly': True
         }
 
-        self.fields['id_empleado'].widget.attrs = {
-            'readonly': True
-        }
+
 
     class Meta:
         model = Venta

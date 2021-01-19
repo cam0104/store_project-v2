@@ -4,7 +4,7 @@
 
 {% block content %}
 
-<form method="POST">
+<form method="POST" action="">
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">{{title}}</h6>
@@ -60,7 +60,7 @@
                 </div>
             </div>
             <div class="card-footer">
-                <button type="su" class="btn btn-primary">Realizar Venta</button>
+                <button type="submit" class="btn btn-primary">Realizar Venta</button>
                 <button type="button" class="btn btn-danger btnCancelarVenta">Cancelar Venta</button>
             </div>
 
@@ -70,5 +70,8 @@
 {% endblock %}
 
 {% block js %}
+
 <script src="{% static 'store_project_app/lib/js/form.js' %}"></script>
+
+
 {% endblock %}
