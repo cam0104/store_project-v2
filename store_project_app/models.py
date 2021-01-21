@@ -1,3 +1,4 @@
+from store_project.models import BaseModel
 from django.db import models
 from django.forms import ModelForm
 from django.forms import model_to_dict
@@ -48,7 +49,7 @@ class Cliente(models.Model):
         verbose_name_plural = 'Clientes'
         ordering = ['id_cliente']
 
-class Venta(models.Model):
+class Venta(BaseModel):
     id_venta = models.AutoField(primary_key=True)
     id_cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE,blank=True, null=True)
     id_empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE,blank=True, null=True)
