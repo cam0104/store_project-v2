@@ -1,5 +1,3 @@
-from django.contrib.auth.models import AbstractUser
-from store_project.models import BaseModel
 from django.db import models
 from django.forms import ModelForm
 from django.forms import model_to_dict
@@ -43,7 +41,7 @@ class Cliente(models.Model):
         max_length=10, default=None, verbose_name='Genero')
 
     def __str__(self):
-        return str(self.id_cliente)
+        return self.nombre
 
     class Meta:
         verbose_name = 'Cliente'
@@ -54,7 +52,7 @@ class Venta(models.Model):
     id_venta = models.AutoField(primary_key=True)
     id_cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE,blank=True, null=True)
     id_empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE,blank=True, null=True)
-    fecha_venta = models.DateField(default=datetime.now)
+    fecha_venta = models.DateField(default=datetime.now().strftime('%Y-%m-%d'))
     forma_pago = models.ForeignKey(Metodo_Pago, on_delete=models.CASCADE)
     precio_total = models.DecimalField(
         default=0.00, max_digits=9, decimal_places=2)
@@ -66,7 +64,7 @@ class Venta(models.Model):
                 self.creacion_user = user
             else:
                 self.actualizacion_usuario = user
-        super(Categoria, self).save()
+        super(Venta, self).save()
 
     def toJSON(self):
         item = model_to_dict(self)

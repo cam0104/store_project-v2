@@ -60,11 +60,7 @@ class nueva_venta_form(ModelForm):
         fields = '__all__'
         exclude = ['creacion_user', 'actualizacion_usuario']
                 
-        # widgets = {
-        #     'id_cliente': widgets.Select(attrs={
-        #         'class': 'form-control-select2',
-        #         'style': 'width: 100%'
-        #     }),
+
 
         #     'fecha_venta': widgets.DateInput(format='%Y-%m-%d', attrs={'value': datetime.now().strftime('%Y-%m-%d'), }),
 

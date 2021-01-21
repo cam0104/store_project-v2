@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'home_page',
     'login',
     'widget_tweaks',
-
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -59,6 +58,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'crum.CurrentRequestUserMiddleware',
 ]
+
+
 
 ROOT_URLCONF = 'store_project.urls'
 

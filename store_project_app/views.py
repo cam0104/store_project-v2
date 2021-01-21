@@ -1,3 +1,4 @@
+import traceback
 from store_project_app.mixins import IsSuperuserMixin, ValidatePermissionRequiredMixin
 from django.shortcuts import render, HttpResponse, redirect, HttpResponseRedirect
 from django.http import JsonResponse
@@ -12,6 +13,7 @@ from .forms import *
 import json
 from .models import Categoria
 from .models import Producto
+
 
 import os
 from django.conf import settings
@@ -255,30 +257,32 @@ class VentaCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, Creat
                     item['value'] = i.nombre
                     data.append(item)
 
-            #elif action == 'add':
-                #ventas = request.POST['ventas']
-                #ventas = json.loads(request.POST['ventas'])
+            elif action == 'add':
+                ventas = json.loads(request.POST['ventas'])
+                venta = Venta()
+                venta.id_cliente = Cliente.objects.get(id_cliente = ventas['id_cliente'])
+                venta.id_empleado = Empleado.objects.get(id_empleado = ventas['id_empleado'])
+                venta.fecha_venta = ventas['fecha_venta']
+                venta.forma_pago = Metodo_Pago.objects.get(id_metodo_pago = ventas['forma_pago'])
+                venta.precio_total = float(ventas['precio_total'])
+                venta.save()
 
-                #venta = Venta()
-                #venta.id_cliente = int(ventas['id_cliente'])
-                #venta.id_empleado = ventas['id_empleado']
-                # venta.fecha_venta = ventas['fecha_venta']
-                # venta.forma_pago = ventas['forma_pago']
-                # venta.precio_total = float(ventas['precio_total'])
-                #venta.save()
-
-                # for i in ventas['productos']:
-                #     detalle_venta = Detalle_Venta()
-                #     detalle_venta.id_detalle_venta = venta.id_venta
-                #     detalle_venta.id_producto = int(i['id_producto'])
-                #     detalle_venta.cantidad = int(i['cantidad'])
-                #     detalle_venta.subtotal = float(i['subtotal'])
-                #     detalle_venta.save()
+                for i in ventas['productos']:
+                    detalle_venta = Detalle_Venta()
+                    detalle_venta.id_venta = Venta.objects.get(id_venta = venta.id_venta)
+                    detalle_venta.id_producto = Producto.objects.get(id_producto = i['id_producto'])
+                    detalle_venta.cantidad = int(i['cantidad'])
+                    detalle_venta.subtotal = float(i['subtotal'])
+                    detalle_venta.save()
             else:
                 data['error'] = 'No ha ingresado a ninguna opción'
         except Exception as e:
             data['error'] = str(e)
+            track = traceback.format_exc()
+            print(track)
         return JsonResponse(data, safe=False)
+
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -287,6 +291,9 @@ class VentaCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, Creat
         context['list_url'] = self.success_url
         context['action'] = 'add'
         return context
+
+
+        
 class VentaListView(ListView):
 
     model = Venta
@@ -335,34 +342,6 @@ class VentaFacturaPdfView(View):
             return HttpResponseRedirect(reverse_lazy('ListaVenta'))
 
 
-# class UsuarioListView(LoginRequiredMixin, CreateView):
-#     model = User
-#     template_name = 'usuario.html'
-#     #permission_required = 'Empleado.view_empleado'
-
-#     @method_decorator(csrf_exempt)
-#     #@method_decorator(login_required)
-#     def dispatch(self, request, *args, **kwargs):
-#         return super().dispatch(request, *args, **kwargs)
-
-#     def post(self, request, *args, **kwargs):
-#         data = {}
-#         try:
-#             action = request.POST['action']
-#             if action == 'searchdata':
-#                 data = []
-#                 for i in User.objects.all():
-#                     data.append(i.toJSON())
-#             else:
-#                 data['error'] = 'Ha ocurrido un error'
-#         except Exception as e:
-#             data['error'] = str(e)
-#         return JsonResponse(data, safe=False)
-
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context['title'] = 'Lista de Usuarios'
-#         return context
 
      
 

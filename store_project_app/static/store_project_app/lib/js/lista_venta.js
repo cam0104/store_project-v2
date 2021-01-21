@@ -13,7 +13,12 @@ $(function () {
             dataSrc: ""
         },
         columns: [
-            { "data": "id_venta" },
+            {
+                "className":      'details-control',
+                "orderable":      false,
+                "data":           null,
+                "defaultContent": ''
+            },
             { "data": "id_cliente" },
             { "data": "id_empleado" },
             { "data": "fecha_venta" },

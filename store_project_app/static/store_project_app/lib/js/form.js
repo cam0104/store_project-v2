@@ -1,14 +1,12 @@
 var tblProductos;
 var ventas = {
     items: {
-        id_venta: '',
         id_cliente: '',
         id_empleado: '',
         fecha_venta: '',
         forma_pago: '',
         precio_total: 0.00,
         productos: []
-
     },
 
     calcular_factura: function () {
@@ -124,7 +122,6 @@ function alerta(titulo, contenido, callback) {
     })
 };
 
-
 $(function () {
 
     $("#search").autocomplete({
@@ -171,6 +168,7 @@ $(function () {
         alerta('Notificación', '¿Está seguro de eliminar este producto de la venta?', function () {
             ventas.items.productos.splice(tr.row, 1);
             ventas.list();
+            console.log(ventas.list);
         });
 
     }).on('change', 'input[name="cantidad"]', function () {
@@ -183,6 +181,7 @@ $(function () {
         ventas.items.productos[tr.row].cantidad = cant;
         ventas.calcular_factura();
         $('td:eq(5)', tblProductos.row(tr.row).node()).html('$' + ventas.items.productos[tr.row].subtotal);
+        console.log(ventas.items.productos[tr.row].subtotal);
 
     })
 
@@ -191,66 +190,73 @@ $(function () {
 
         e.preventDefault();
 
-        ventas.items.id_cliente = $('input[name="id_cliente"]').val();
+        ventas.items.id_cliente = $('select[name="id_empleado"]').val();
+        ventas.items.id_empleado = $('select[name="id_empleado"]').val();
         ventas.items.fecha_venta = $('input[name="fecha_venta"]').val();
-        ventas.items.forma_pago = $('input[name="forma_pago"]').val();
+        ventas.items.forma_pago = $('select[name="forma_pago"]').val();
         ventas.items.precio_total = $('input[name="precio_total"]').val();
+        console.log(ventas.items)
 
         var parametros = new FormData();
+        console.log(parametros);
         parametros.append('action', $('input[name="action"]').val());
+        console.log($('input[name="action"]').val());
         parametros.append('ventas', JSON.stringify(ventas.items));
-        enviar_productos(window.location.pathname, parametros, function () {
+        console.log(JSON.stringify(ventas.items));
+        submit_with_ajax(window.location.pathname, 'Notificación', '¿Esta seguro de realizar la siguiente acción?',parametros, function () {
             location.href = 'crear_venta';
         });
     });
 });
 
-function enviar_productos(url, parametros, callback) {
-        $.confirm({
-            theme: 'material',
-            title: 'Confirmación',
-            icon: 'fa fa-info',
-            content: '¿Estás seguro de realizar la siguiente acción',
-            columnClass: 'small',
-            typeAnimated: true,
-            cancelButtonClass: 'btn-primary',
-            draggable: true,
-            dragWindowBorder: false,
-            buttons: {
-                info: {
-                    text: "Si",
-                    btnClass: 'btn-primary',
-                    action: function () {
-                        $.ajax({
-                            url: url,
-                            type: 'POST',
-                            data: parametros,
-                            dataType: 'json',
-                            processData: false,
-                            contentType: false,
-                            // cache : false,
-                        }).done(function (data) {
-                            if (!data.hasOwnProperty('error')) {
-                                callback();
-                                return false;
-                            }
-                            mensaje_error(data.error);
-                        }).fail(function (jqXHR, textStatus, errorThrown) {
-                            alert(textStatus + ':' + errorThrown);
-                            var err = new Error();
-                            console.log(err.stack);
-                        }).always(function (jqXHR, textStatus, errorThrown) {
-    
-                        })
-                    }
-                },
-                danger: {
-                    text: "No",
-                    btnClass: 'btn-red',
-                    action: function () {
-    
-                    }
-                },
-            }
-        })
-    };
+function submit_with_ajax(url, title, content, parameters, callback) {
+    $.confirm({
+        theme: 'material',
+        title: title,
+        icon: 'fa fa-info',
+        content: content,
+        columnClass: 'small',
+        typeAnimated: true,
+        cancelButtonClass: 'btn-primary',
+        draggable: true,
+        dragWindowBorder: false,
+        buttons: {
+            info: {
+                text: "Si",
+                btnClass: 'btn-primary',
+                action: function () {
+                    $.ajax({
+                        url: url, //window.location.pathname
+                        type: 'POST',
+                        data: parameters,
+                        dataType: 'json',
+                        processData: false,
+                        contentType: false,
+                    }).done(function (data) {
+                        console.log(data);
+                        if (!data.hasOwnProperty('error')) {
+                            callback();
+                            return false;
+                        }
+                        message_error(data.error);
+                    }).fail(function (jqXHR, textStatus, errorThrown) {
+                        alert(textStatus + ': ' + errorThrown);
+                        console.log(textStatus + ': ' + errorThrown);
+                        var err = new Error();
+                        console.log(err.stack);
+                    }).always(function (data) {
+
+                    });
+                }
+            },
+            danger: {
+                text: "No",
+                btnClass: 'btn-red',
+                action: function () {
+
+                }
+            },
+        }
+    })
+}
+

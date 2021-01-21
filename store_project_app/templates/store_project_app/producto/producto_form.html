@@ -9,9 +9,9 @@
             <h6 class="m-0 font-weight-bold text-primary">{{title}}</h6>
         </div>
         <div class="card-body">
+            <input type="hidden" name="action" value="{{action}}">
             <div class="table-responsive">
                 {% csrf_token %}
-                <input type="hidden" name="action" value="{{action}}">
                 {% if form.errors %}
                 <div class="alert alert-danger alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -42,7 +42,7 @@
 
 {% block js %}
 
-<script>
+<!-- <script>
 
     $('form').on('submit', function (e) {
         e.preventDefault();
@@ -53,6 +53,6 @@
         })
     });
 
-</script> 
+</script>  -->
 
 {% endblock %}
