@@ -475,6 +475,8 @@ section {
   padding: 60px 0;
 }
 
+
+
 .section-bg {
   background-color: #eeeef5;
 }
@@ -494,6 +496,8 @@ section {
   color: #434175;
 }
 
+
+
 .section-title h2::after {
   content: '';
   position: absolute;
@@ -507,6 +511,7 @@ section {
 
 .section-title p {
   margin-bottom: 0;
+  text-align: justify;
 }
 
 /*--------------------------------------------------------------

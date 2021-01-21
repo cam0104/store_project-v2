@@ -34,7 +34,7 @@ class EstadisticasView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['panel'] = 'Estadisticas'
+        context['title'] = 'Estadisticas'
         return context
 class CategoriaListView(LoginRequiredMixin, IsSuperuserMixin, ListView):
     model = Categoria

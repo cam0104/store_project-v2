@@ -36,7 +36,7 @@ class Empleado(models.Model):
         return item
 
     def __str__(self):
-        return str(self.id_empleado)
+        return str(self.nombre)
 
 class Cliente(models.Model):
     id_cliente = models.AutoField(primary_key=True, blank=False)
@@ -47,6 +47,9 @@ class Cliente(models.Model):
     telefono = models.CharField(max_length=50, verbose_name='Nombres')
     genero = models.CharField(
         max_length=10, default=None, verbose_name='Genero')
+
+    def __str__(self):
+        return str(self.nombre)
 
     def toJSON(self):
         item = model_to_dict(self)
