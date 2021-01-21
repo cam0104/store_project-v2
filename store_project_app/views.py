@@ -13,6 +13,8 @@ from .forms import *
 import json
 from .models import Categoria
 from .models import Producto
+from .models import Detalle_Venta
+
 
 
 import os
@@ -291,8 +293,6 @@ class VentaCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, Creat
         context['list_url'] = self.success_url
         context['action'] = 'add'
         return context
-
-
         
 class VentaListView(ListView):
 
@@ -312,6 +312,10 @@ class VentaListView(ListView):
                 data = []
                 for i in Venta.objects.all():
                     data.append(i.toJSON())
+            elif action == 'searchdata_detalle':
+                data = []
+                for i in Detalle_Venta.objects.filter(id_venta=request.POST['id']):
+                    data.append(i.toJSON())
             else:
                 data['error'] = 'Ha ocurrido un error'
         except Exception as e:
@@ -322,6 +326,7 @@ class VentaListView(ListView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Listado de Ventas'
         return context
+        
 class VentaFacturaPdfView(View):
 
     def get(self, request, *args, **kwargs):

@@ -1,5 +1,20 @@
+function format(d) {
+    console.log(d)
+    var html = '<table class="table">';
+    html += '<thead';
+    html += '<tr><th scope="col">Producto</th>';
+    html += '<th scope="col">Categoria</th>';
+    html += '<th scope="col">Cantidad</th>';
+    html += '<th scope="col">Subtotal</th></tr>';
+    html += '</thead>';
+    html += '<tbody></tbody>';
+    return html
+}
+
+var tblVenta;
+
 $(function () {
-    $('#dataTable').DataTable({
+    var tblVenta = $('#dataTable').DataTable({
         responsive: true,
         autoWidth: false,
         destroy: true,
@@ -13,12 +28,14 @@ $(function () {
             dataSrc: ""
         },
         columns: [
+
             {
-                "className":      'details-control',
-                "orderable":      false,
-                "data":           null,
+                "className": 'details-control',
+                "orderable": false,
+                "data": null,
                 "defaultContent": ''
             },
+            { "data": "id_venta" },
             { "data": "id_cliente" },
             { "data": "id_empleado" },
             { "data": "fecha_venta" },
@@ -32,7 +49,7 @@ $(function () {
                 class: 'text-center',
                 orderable: false,
                 render: function (data, type, row) {
-                    var botones = '<a href="editar_categoria/' + row.id_categoria + '/" class="btn btn-warning btn-circle"><i class="fas fa-edit"></i></a>';
+                    var botones = '<a rel="detalle" class="btn btn-success btn-circle"><i class="fas fa-search"></i></a>';
                     botones += '<a href="eliminar_categoria/' + row.id_categoria + '/" class="btn btn-danger btn-circle"><i class="fas fa-trash"></i></a>'
                     return botones
                 }
@@ -40,5 +57,63 @@ $(function () {
         ],
         initComplete: function (settings, json) {
         }
+
     });
+
+    $("#dataTable tbody").on('click', 'a[rel="detalle"]', function () {
+        var tr = tblVenta.cell($(this).closest('td, li')).index();
+        var data = tblVenta.row(tr.row).data();
+        console.log(data.id_venta);
+        console.log(data);
+
+        $('#tblDetalles').DataTable({
+            responsive: true,
+            autoWidth: false,
+            destroy: true,
+            deferRender: true,
+            ajax: {
+                url: window.location.pathname,
+                type: 'POST',
+                data: {
+                    'action': 'searchdata_detalle',
+                    'id': data.id_venta,
+                },
+                dataSrc: ""
+            },
+            columns: [
+
+                { "data": "producto.nombre" },
+                { "data": "producto.categoria.nombre" },
+                { "data": "producto.precio" },
+                { "data": "cantidad" },
+                { "data": "subtotal" },
+            ],
+            columnDefs: [
+                {
+                    targets: [-1, -3],
+                    class: 'text-center',
+                    render: function (data, type, row) {
+                        return '$' + parseFloat(data).toFixed(2);
+                    },
+
+                    targets: [-2],
+                    class: 'text-center',
+                    render: function (data, type, row) {
+                        return data;
+                    }
+                },
+            ],
+            initComplete: function (settings, json) {
+            }
+
+        });
+
+        $('#ventaModal').modal('show');
+
+
+    })
+
+
+
+
 });

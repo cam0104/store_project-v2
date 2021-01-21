@@ -41,15 +41,16 @@ class Cliente(models.Model):
     genero = models.CharField(
         max_length=10, default=None, verbose_name='Genero')
 
-    def __str__(self):
-        return self.nombre
+    def toJSON(self):
+        item = model_to_dict(self)
+        return item
 
     class Meta:
         verbose_name = 'Cliente'
         verbose_name_plural = 'Clientes'
         ordering = ['id_cliente']
 
-class Venta(BaseModel):
+class Venta(models.Model):
     id_venta = models.AutoField(primary_key=True)
     id_cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE,blank=True, null=True)
     id_empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE,blank=True, null=True)
@@ -57,6 +58,9 @@ class Venta(BaseModel):
     forma_pago = models.ForeignKey(Metodo_Pago, on_delete=models.CASCADE)
     precio_total = models.DecimalField(
         default=0.00, max_digits=9, decimal_places=2)
+
+    def __str__(self):
+        return self.id_cliente.nombre
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         user = get_current_user()
@@ -69,8 +73,15 @@ class Venta(BaseModel):
 
     def toJSON(self):
         item = model_to_dict(self)
+        item['cliente'] = self.id_cliente.toJSON()
+        #item['detalle'] = []
+        #item['detalle'] = [Detalle_Venta.objects.get(id_venta = self.id_venta)]
+        #item['detalle'] = [Venta.]
+        #item['detalle'] = [Detalle_Venta.objects.filter(id_venta=self.id_venta)]
+        #item['detalle'] = self.id_venta.toJSON()
+        #item['detalle'] = [DetalleVenta.object
+        #item['detalle'] = [i.toJSON() for i in Detalle_Venta.objects.filter(id_venta=self.id_venta)]
         return item
-
 
 class Categoria(models.Model):
     id_categoria = models.AutoField(primary_key=True)
@@ -131,6 +142,12 @@ class Detalle_Venta(models.Model):
 
     def __str__(self):
         return self.id_producto
+
+    def toJSON(self):
+        item = model_to_dict(self)
+        item['producto'] = self.id_producto.toJSON()
+        item['subtotal'] = format(self.subtotal, '.2f')
+        return item
 
     class Meta:
         verbose_name = 'Detalle de Venta'

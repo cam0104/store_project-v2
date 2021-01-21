@@ -44,7 +44,7 @@
     <b>FACTURA:</b> {{ venta.id_venta }}<br>
     <b>FECHA DE VENTA:</b> {{ venta.fecha_venta }}<br>
     <b>CLIENTE:</b> {{ venta.id_cliente.nombre|upper }}<br>
-    <b>DNI:</b> {{ venta.id_cliente.id_cliente }}<br>
+    <b>Id Cliente:</b> {{ venta.id_cliente }}<br>
 </p>
 <table id="invoice">
     <thead>
@@ -57,7 +57,7 @@
     </tr>
     </thead>
     <tbody>
-    {% for d in venta.Detalle_Venta.all %}
+    {% for d in venta.detalle_set.all %}
         <tr {% if forloop.first %}style="padding-top: 3px;" {% endif %}>
             <td>{{ d.prod.cat.name }}</td>
             <td>{{ d.prod.name }}</td>

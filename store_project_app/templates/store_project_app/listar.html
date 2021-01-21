@@ -2,6 +2,10 @@
 {% load static %}
 {% load crispy_forms_tags %}
 
+{% block head_list %}
+
+{% endblock %}
+
 
 {% block content %}
 
@@ -27,9 +31,12 @@
 
 {% endblock %}
 
+
+
 {% block js %}
 
 <script src="{% static 'store_project_app/lib/js/lista_categoria.js' %}"></script>
 
-
 {% endblock %}
+
+

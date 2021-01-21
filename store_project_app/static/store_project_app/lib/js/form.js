@@ -243,7 +243,7 @@ function submit_with_ajax(url, title, content, parameters, callback) {
                         alert(textStatus + ': ' + errorThrown);
                         console.log(textStatus + ': ' + errorThrown);
                         var err = new Error();
-                        console.log(err.stack);
+                        console.log(err.stack)
                     }).always(function (data) {
 
                     });
