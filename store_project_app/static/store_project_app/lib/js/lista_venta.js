@@ -29,17 +29,11 @@ $(function () {
         },
         columns: [
 
-            {
-                "className": 'details-control',
-                "orderable": false,
-                "data": null,
-                "defaultContent": ''
-            },
             { "data": "id_venta" },
-            { "data": "id_cliente" },
-            { "data": "id_empleado" },
+            { "data": "cliente.nombre" },
+            { "data": "empleado.nombre" },
             { "data": "fecha_venta" },
-            { "data": "forma_pago" },
+            { "data": "forma_pago.nombre" },
             { "data": "precio_total" },
             { "data": "botones" },
         ],

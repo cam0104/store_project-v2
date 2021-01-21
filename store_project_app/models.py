@@ -9,6 +9,10 @@ class Metodo_Pago(models.Model):
     id_metodo_pago = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=50, verbose_name='Nombre')
 
+    def toJSON(self):
+        item = model_to_dict(self)
+        return item
+
     def __str__(self):
         return self.nombre
 class Rol(models.Model):
@@ -27,7 +31,10 @@ class Empleado(models.Model):
     genero = models.CharField(
         max_length=10, default=None, choices= (('M', 'Masculino'),('F', 'Femenino')), verbose_name='Genero')
 
-    
+    def toJSON(self):
+        item = model_to_dict(self)
+        return item
+
     def __str__(self):
         return str(self.id_empleado)
 
@@ -74,13 +81,8 @@ class Venta(models.Model):
     def toJSON(self):
         item = model_to_dict(self)
         item['cliente'] = self.id_cliente.toJSON()
-        #item['detalle'] = []
-        #item['detalle'] = [Detalle_Venta.objects.get(id_venta = self.id_venta)]
-        #item['detalle'] = [Venta.]
-        #item['detalle'] = [Detalle_Venta.objects.filter(id_venta=self.id_venta)]
-        #item['detalle'] = self.id_venta.toJSON()
-        #item['detalle'] = [DetalleVenta.object
-        #item['detalle'] = [i.toJSON() for i in Detalle_Venta.objects.filter(id_venta=self.id_venta)]
+        item['empleado'] = self.id_empleado.toJSON()
+        item['forma_pago'] = self.forma_pago.toJSON()
         return item
 
 class Categoria(models.Model):
