@@ -92,7 +92,7 @@ var ventas = {
     },
 };
 
-function alerta(titulo, contenido, callback) {
+function alerta(titulo, contenido, callback, cancelar) {
     $.confirm({
         theme: 'material',
         title: titulo,
@@ -115,7 +115,7 @@ function alerta(titulo, contenido, callback) {
                 text: "No",
                 btnClass: 'btn-red',
                 action: function () {
-
+                    cancelar()
                 }
             },
         }
@@ -160,7 +160,7 @@ $(function () {
         alerta('Notificación', '¿Está seguro de cancelar la venta?', function () {
             ventas.items.productos = [];
             ventas.list();
-        });
+        }, function(){});
     });
 
     $("#dataTable tbody").on('click', 'a[rel="eliminar"]', function () {
@@ -169,6 +169,8 @@ $(function () {
             ventas.items.productos.splice(tr.row, 1);
             ventas.list();
             console.log(ventas.list);
+        }, function(){
+
         });
 
     }).on('change', 'input[name="cantidad"]', function () {
@@ -203,8 +205,14 @@ $(function () {
         console.log($('input[name="action"]').val());
         parametros.append('ventas', JSON.stringify(ventas.items));
         console.log(JSON.stringify(ventas.items));
-        submit_with_ajax(window.location.pathname, 'Notificación', '¿Esta seguro de realizar la siguiente acción?',parametros, function () {
-            location.href = 'crear_venta';
+        submit_with_ajax(window.location.pathname, 'Notificación', '¿Esta seguro de realizar la siguiente acción?',parametros, function (d) {
+            alerta('Notificación', '¿Desea imprimir la factura?', function(){
+                window.open(location.href = 'factura_venta/'+d.id+'/', '_blank');
+                location.href = 'crear_venta';
+            }, function(){
+                location.href = 'crear_venta';
+            })
+            
         });
     });
 });
@@ -235,7 +243,7 @@ function submit_with_ajax(url, title, content, parameters, callback) {
                     }).done(function (data) {
                         console.log(data);
                         if (!data.hasOwnProperty('error')) {
-                            callback();
+                            callback(data);
                             return false;
                         }
                         message_error(data.error);
@@ -258,5 +266,5 @@ function submit_with_ajax(url, title, content, parameters, callback) {
             },
         }
     })
-}
+} 
 

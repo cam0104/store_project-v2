@@ -43,8 +43,10 @@ $(function () {
                 class: 'text-center',
                 orderable: false,
                 render: function (data, type, row) {
-                    var botones = '<a rel="detalle" class="btn btn-success btn-circle"><i class="fas fa-search"></i></a>';
-                    botones += '<a href="eliminar_categoria/' + row.id_categoria + '/" class="btn btn-danger btn-circle"><i class="fas fa-trash"></i></a>'
+                    var botones = '<a rel="detalle" class="btn btn-success btn-circle"><i class="fas fa-search"></i></a> ';
+                    botones += '<a href="editar_venta/' + row.id_venta + '/" class="btn btn-warning btn-circle"><i class="fas fa-edit"></i></a> ';
+                    botones += '<a href="eliminar_categoria/' + row.id_categoria + '/" class="btn btn-danger btn-circle"><i class="fas fa-trash"></i></a> '
+                    botones += '<a href="/factura_venta/' + row.id_venta + '/" target="_blank" class="btn btn-info btn-circle"><i class="fas fa-file-pdf"></i></a> '
                     return botones
                 }
             },

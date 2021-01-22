@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
 <style>
     .img-invoice {
         width: 50px;
@@ -33,8 +34,8 @@
         text-align: center;
     }
 </style>
+
 <body>
-<img src="{{ icon }}" class="img-invoice">
 <p class="head">
     {{ comp.name|upper }}<br>
     {{ comp.ruc }}<br>
@@ -44,7 +45,9 @@
     <b>FACTURA:</b> {{ venta.id_venta }}<br>
     <b>FECHA DE VENTA:</b> {{ venta.fecha_venta }}<br>
     <b>CLIENTE:</b> {{ venta.id_cliente.nombre|upper }}<br>
-    <b>Id Cliente:</b> {{ venta.id_cliente }}<br>
+    <b>VENDEDOR:</b> {{ venta.id_empleado.nombre|upper }}<br>
+
+
 </p>
 <table id="invoice">
     <thead>
@@ -52,31 +55,30 @@
         <th style="width: 20%;">CATEGORIA</th>
         <th style="width: 40%;">PRODUCTO</th>
         <th style="width: 10%;">CANT</th>
-        <th style="width: 15%;">P.UNITARIO</th>
-        <th style="width: 15%;">TOTAL</th>
+        <th style="width: 15%;">VALOR UNITARIO</th>
+        <th style="width: 15%;">SUBTOTAL</th>
     </tr>
     </thead>
     <tbody>
-    {% for d in venta.detalle_set.all %}
+    
+    {% for detalles in detalle %}
         <tr {% if forloop.first %}style="padding-top: 3px;" {% endif %}>
-            <td>{{ d.prod.cat.name }}</td>
-            <td>{{ d.prod.name }}</td>
-            <td class="text-center">{{ d.cant }}</td>
-            <td class="text-center">${{ d.price }}</td>
-            <td style="text-align: right;">${{ d.subtotal }}</td>
+            <td>{{ detalles.id_producto.categoria }}</td>
+            <td>{{ detalles.id_producto.nombre }}</td>
+            <td class="text-center">{{ detalles.cantidad }}</td>
+            <td class="text-center">${{ detalles.id_producto.precio }}</td>
+            <td class="text-center">${{ detalles.subtotal }}</td>
         </tr>
     {% endfor %}
+
     <tr style="border-top: 1px solid black; padding-top: 4px;">
-        <td colspan="4"><b>SUBTOTAL</b></td>
-        <td style="text-align: right">${{ sale.subtotal }}</td>
+        <td colspan="4"><b>FORMA DE PAGO</b></td>
+        <td style="text-align: right">{{ venta.forma_pago }}</td>
     </tr>
-    <tr style="padding-top: 0px;">
-        <td colspan="4"><b>IVA 12%</b></td>
-        <td style="text-align: right">${{ sale.iva }}</td>
-    </tr>
+
     <tr style="padding-top: 0px;">
         <td colspan="4"><b>TOTAL A PAGAR</b></td>
-        <td style="text-align: right">${{ sale.total }}</td>
+        <td style="text-align: right">${{ venta.precio_total }}</td>
     </tr>
     </tbody>
 </table>

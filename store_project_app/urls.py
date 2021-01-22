@@ -14,8 +14,9 @@ urlpatterns = [
     path('agregar_producto', views.ProductoCreateView.as_view(), name = 'AgregarProducto'),
     path('editar_producto/<int:pk>/', views.ProductoUpdateView.as_view(), name = 'EditarCategoria'),
 
-    path('crear_venta', views.VentaCreateView.as_view(), name = 'Venta'),
     path('ventas', views.VentaListView.as_view(), name = 'ListaVenta'),
+    path('crear_venta', views.VentaCreateView.as_view(), name = 'Venta'),
+    #path('editar_venta/<int:pk>/', views.VentaUpdateView.as_view(), name = 'ListaVenta'),
 
     path('factura_venta/<int:pk>/', views.VentaFacturaPdfView.as_view(), name = 'FacturaVenta'),
 
