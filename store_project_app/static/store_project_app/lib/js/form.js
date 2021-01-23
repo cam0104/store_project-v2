@@ -36,9 +36,9 @@ var ventas = {
             deferRender: true,
 
             columns: [
-                { "data": "id_producto" },
                 { "data": "nombre" },
                 { "data": "categoria.nombre" },
+                { "data": "stock" },
                 { "data": "precio" },
                 { "data": "cantidad" },
                 { "data": "subtotal" },
@@ -81,7 +81,7 @@ var ventas = {
             rowCallback(row, data, displayNum, displayIndex, dataIndex) {
                 $(row).find('input[name="cantidad"]').TouchSpin({
                     min: 1,
-                    initval: 1000000,
+                    max: data.stock,
                     step: 1
                 });
 

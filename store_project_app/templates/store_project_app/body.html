@@ -35,7 +35,7 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{% url 'Venta' %}">Nueva Venta</a>
-                        <a class="collapse-item" href="{% url 'ListaVenta' %}">Lista de ventas</a>
+                        <a class="collapse-item" href="{% url 'ListaVenta' %}">Listado de ventas</a>
                     </div>
                 </div>
             </li>
@@ -49,9 +49,8 @@
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-
-                        <a class="collapse-item" href="{% url 'Productos' %}">Listado de Productos</a>
                         <a class="collapse-item" href="{% url 'AgregarProducto' %}">Nuevo Producto</a>
+                        <a class="collapse-item" href="{% url 'Productos' %}">Listado de Productos</a>
                     </div>
                 </div>
             </li>
@@ -64,16 +63,10 @@
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{% url 'Categoria' %}">Listado de Categorias</a>
                         <a class="collapse-item" href="{% url 'AgregarCategoria' %}">Nueva Categoria</a>
+                        <a class="collapse-item" href="{% url 'Categoria' %}">Listado de Categorias</a>
                     </div>
                 </div>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Inventario</span></a>
             </li>
 
             <li class="nav-item">
@@ -90,11 +83,6 @@
                 </div>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fas fa-id-card"></i>
-                    <span>Usuarios</span></a>
-            </li>
             
             <hr class="sidebar-divider d-none d-md-block">
 

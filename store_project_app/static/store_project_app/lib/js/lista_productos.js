@@ -1,6 +1,6 @@
-   
-  $(function () {
-    $('#dataTable').DataTable({
+
+$(function () {
+    var tblproductos = $('#dataTable').DataTable({
         responsive: true,
         autoWidth: false,
         destroy: true,
@@ -16,9 +16,11 @@
         columns: [
             { "data": "id_producto" },
             { "data": "nombre" },
-            { "data": "categoria" },
+            { "data": "categoria.nombre" },
             { "data": "stock" },
             { "data": "precio" },
+            { "data": "fecha_vencimiento" },
+            { "data": "fecha_vencimiento" },
             { "data": "botones" },
         ],
         columnDefs: [
@@ -27,11 +29,40 @@
                 class: 'text-center',
                 orderable: false,
                 render: function (data, type, row) {
-                    var botones = '<a href="editar_producto/' + row.id_producto + '/" class="btn btn-warning btn-circle"><i class="fas fa-edit"></i></a>';
-                    botones += '<a href="#" class="btn btn-danger btn-circle"><i class="fas fa-trash"></i></a>'
+                    var botones = '<a href="editar_producto/' + row.id_producto + '/" class="btn btn-warning btn-circle"><i class="fas fa-edit"></i></a> ';
+                    botones += '<a href="eliminar_producto/' + row.id_producto + '/" class="btn btn-danger btn-circle"><i class="fas fa-trash"></i></a> ';
                     return botones
-                }
+                },
             },
+
+            {
+                targets: [-2],
+                class: 'text-center',
+                orderable: false,
+                render: function (data, type, row) {
+                    var now = moment().format('YYYY-MM-DD');
+                   
+                    return now
+                },
+            },
+
+            {
+                targets: [-5],
+                class: 'text-center',
+                orderable: false,
+                render: function (data, type, row) {
+                    if (data > 10) {
+                        return '<span class="badge badge-success">' + data + '</span>'
+                    }
+                    if (data > 5 && data < 10) {
+                        return '<span class="badge badge-warning">' + data + '</span>'
+                    }
+                    return '<span class="badge badge-danger">' + data + '</span>'
+
+                },
+            },
+
+
         ],
         initComplete: function (settings, json) {
         }

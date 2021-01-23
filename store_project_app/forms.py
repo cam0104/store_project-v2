@@ -4,6 +4,18 @@ from .models import *
 
 
 class nuevo_producto_form(ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['fecha_vencimiento'].widget.attrs = {
+            'autocomplete': 'off',
+            'class': 'form-control datetimepicker-input',
+            'id': 'fecha_vencimiento',
+            'data-target': '#fecha_vencimiento',
+            'data-toggle': 'datetimepicker'
+
+        }
     class Meta:
         model = Producto
         fields = '__all__'
@@ -52,8 +64,7 @@ class nueva_venta_form(ModelForm):
         self.fields['precio_total'].widget.attrs = {
             'readonly': True
         }
-
-
+        
 
     class Meta:
         model = Venta
