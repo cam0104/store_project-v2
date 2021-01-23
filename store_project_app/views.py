@@ -57,7 +57,7 @@ class EstadisticasView(TemplateView):
             for p in Producto.objects.all():
                 total = Detalle_Venta.objects.filter(
                     id_venta__fecha_venta__year=ano, id_venta__fecha_venta__month=mes, id_producto=p.id_producto).aggregate(
-                        resultado=Coalesce(Sum('subtotal'), 0)).get('resultado')
+                        resultado=Coalesce(Sum('cantidad'), 0)).get('resultado')
                 data.append({
                     'name': p.nombre,
                     'y': float(total)

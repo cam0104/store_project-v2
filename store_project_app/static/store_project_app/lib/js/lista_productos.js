@@ -54,7 +54,7 @@ $(function () {
                     if (data > 10) {
                         return '<span class="badge badge-success">' + data + '</span>'
                     }
-                    if (data > 5 && data < 10) {
+                    if (data > 5 && data <= 10) {
                         return '<span class="badge badge-warning">' + data + '</span>'
                     }
                     return '<span class="badge badge-danger">' + data + '</span>'

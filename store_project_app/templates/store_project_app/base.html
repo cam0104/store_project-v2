@@ -24,8 +24,7 @@
     <!-- Custom styles for this template-->
     <link href="{% static 'store_project_app/lib/css/sb-admin-2.min.css' %}" rel="stylesheet">
     <link href="{% static 'store_project_app/lib/css/mycss.css' %}" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js">
-    
+    <script src="{% static 'store_project_app/lib/js/functions.js' %}"></script>
     <link href="{% static 'store_project_app/lib/css/sb-admin-2.min.css' %}" rel="stylesheet">
     <link href="{% static 'store_project_app/vendor/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
     <!-- Vendor CSS Files -->
@@ -64,20 +63,22 @@
     <script
         src="{% static 'store_project_app/lib/bootstrap-touchspin-4.3.0/jquery.bootstrap-touchspin.css' %}"></script>
     <script src="{% static 'store_project_app/lib/bootstrap-touchspin-4.3.0/jquery.bootstrap-touchspin.js' %}"></script>
+
     <!--Plugin Fecha-->
     <script src="{% static 'store_project_app/lib/moment-2.25.3/moment-with-locales.js' %}"></script>
     <script src="{% static 'store_project_app/lib/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css' %}"></script>
     <script src="{% static 'store_project_app/lib/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.js' %}"></script>
-    
+ 
 
+    {% block head %}
 
+    {% endblock %}
 </head>
 
 {% block body %}
 {% endblock %}
 
 {% block js %}
-
 {% endblock %}
 
 </html>

@@ -92,7 +92,7 @@ class Categoria(models.Model):
     id_categoria = models.AutoField(primary_key=True)
     nombre = models.CharField(
         max_length=100, verbose_name='Nombre', unique=True)
-    descripcion = models.CharField(max_length=100, verbose_name='Descripción')
+    descripcion = models.CharField(max_length=100, verbose_name='Descripción',blank=True, null=True)
 
     def __str__(self):
         return self.nombre
