@@ -1,0 +1,119 @@
+{% extends "store_project_app/body.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<form method="POST" action="" id="form">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">{{title}}</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="{{action}}">
+                {% if form.errors %}
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h5><i class="icon fas fa-ban"></i> Alerta</h5>
+                    <ul>
+                        {% for field in form %}
+                        {% for error in field.errors %}
+                        <li>
+                            {{error}}
+                        </li>
+
+                        {% endfor %}
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+                {{form|crispy}}
+            </div>
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">{{title}}</button>
+        </div>
+    </div>
+</form>
+
+
+{% endblock %}
+
+
+{% block js %}
+
+
+
+<script>
+
+    function mensaje_error(obj) {
+
+        $.each(obj, function (key, valor) {
+            console.log(key);
+            console.log(valor);
+        });
+    }
+    $('form').on('submit', function (e) {
+        e.preventDefault();
+        var parametros = $(this).serializeArray();
+        //console.log(parametros);
+
+        submit(window.location.pathname, parametros, function () {
+            location.href = "{% url 'Categoria' %}";
+
+        });
+    });
+
+    function submit(url, parametros, callback) {
+        $.confirm({
+            theme: 'material',
+            title: 'Confirmación',
+            icon: 'fa fa-info',
+            content: '¿Estás seguro de realizar la siguiente acción',
+            columnClass: 'small',
+            typeAnimated: true,
+            cancelButtonClass: 'btn-primary',
+            draggable: true,
+            dragWindowBorder: false,
+            buttons: {
+                info: {
+                    text: "Si",
+                    btnClass: 'btn-primary',
+                    action: function () {
+                        $.ajax({
+                            url: url,
+                            type: 'POST',
+                            data: parametros,
+                            dataType: 'json '
+                        }).done(function (data) {
+                            if (!data.hasOwnProperty('error')) {
+                                callback();
+                                return false;
+                            }
+                            mensaje_error(data.error);
+                        }).fail(function (jqXHR, textStatus, errorThrown) {
+                            alert(textStatus + ':' + errorThrown);
+                        }).always(function (jqXHR, textStatus, errorThrown) {
+
+                        })
+
+                    }
+                },
+                danger: {
+                    text: "No",
+                    btnClass: 'btn-red',
+                    action: function () {
+
+                    }
+                },
+            }
+        })
+    }
+
+
+
+</script>
+
+
+{% endblock %}

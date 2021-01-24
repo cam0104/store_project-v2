@@ -30,12 +30,12 @@
                 <div class="alert alert-danger alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                     <h5><i class="icon fas fa-ban"></i> Notificación</h5>
-                    ¿Estás seguro de eliminar el registro Nº {{object.id_categoria}}?
+                    ¿Estás seguro de eliminar el registro Nº {{object.nombre}}?
                 </div>
             </div>
             <div class="card-footer">
                 <button type="submit" class="btn btn-primary">Si, aceptar</button>
-                <a href="{% url 'Categoria' %}" class="btn btn-secondary">Cancelar</a>
+                <a href="{% url 'Clientes' %}" class="btn btn-secondary">Cancelar</a>
             </div>
         </div>
 </form>
@@ -44,5 +44,4 @@
 
 {% block js %}
 
-   
 {% endblock %}

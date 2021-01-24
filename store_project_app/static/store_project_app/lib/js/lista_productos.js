@@ -41,9 +41,22 @@ $(function () {
                 orderable: false,
                 render: function (data, type, row) {
                     var now = moment().format('YYYY-MM-DD');
+                    var parseDate = Date.parse(data)
+                    var operacion = now -parseDate
+                    var dias = (Math.round(operacion/ (1000*60*60*24)))
                    
-                    return now
-                },
+                    return dias
+                }, 
+            },
+            {
+                targets: [-4],
+                class: 'text-center',
+                orderable: false,
+                render: function (data, type, row) {
+                    var now = moment().format('YYYY-MM-DD');
+                   
+                    return '$' + parseFloat(data).toFixed(0);
+                }, 
             },
 
             {

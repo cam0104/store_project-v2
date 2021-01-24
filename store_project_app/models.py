@@ -44,9 +44,9 @@ class Cliente(models.Model):
     nombre = models.CharField(max_length=50, verbose_name='Nombres')
     apellidos = models.CharField(max_length=50, verbose_name='Apellidos')
     direccion = models.CharField(max_length=50, verbose_name='Dirección')
-    telefono = models.CharField(max_length=50, verbose_name='Nombres')
+    telefono = models.CharField(max_length=50, verbose_name='Telefono')
     genero = models.CharField(
-        max_length=10, default=None, verbose_name='Genero')
+        max_length=10, default=None, choices= (('M', 'Masculino'),('F', 'Femenino')), verbose_name='Genero')
 
     def __str__(self):
         return str(self.nombre)
@@ -54,7 +54,6 @@ class Cliente(models.Model):
     def toJSON(self):
         item = model_to_dict(self)
         return item
-
     class Meta:
         verbose_name = 'Cliente'
         verbose_name_plural = 'Clientes'

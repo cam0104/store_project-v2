@@ -76,7 +76,7 @@ class EstadisticasView(TemplateView):
 
 class CategoriaListView(LoginRequiredMixin, ListView):
     model = Categoria
-    template_name = 'categorias.html'
+    template_name = 'categoria/categorias.html'
 
     @method_decorator(csrf_exempt)
     # @method_decorator(login_required)
@@ -107,7 +107,7 @@ class CategoriaCreateView(CreateView):
 
     model = Categoria
     form_class = nueva_categoria_form
-    template_name = 'categoria_form.html'
+    template_name = 'categoria/categoria_form.html'
     success_url = reverse_lazy("{% url 'AgregarCategoria' %}")
 
     @method_decorator(login_required)
@@ -137,7 +137,7 @@ class CategoriaCreateView(CreateView):
 class CategoriaUpdateView(UpdateView):
     model = Categoria
     form_class = nueva_categoria_form
-    template_name = 'categoria_form.html'
+    template_name = 'categoria/categoria_form.html'
     success_url = reverse_lazy('Categoria')
 
     @method_decorator(login_required)
@@ -167,7 +167,7 @@ class CategoriaUpdateView(UpdateView):
 
 class CategoriaDeleteView(DeleteView):
     model = Categoria
-    template_name = 'eliminar_categoria.html'
+    template_name = 'categoria/eliminar_categoria.html'
     success_url = reverse_lazy('Categoria')
 
     @method_decorator(csrf_exempt)
@@ -356,7 +356,6 @@ class VentaCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, Creat
         context['action'] = 'add'
         return context
 
-
 class VentaListView(ListView):
 
     model = Venta
@@ -389,7 +388,6 @@ class VentaListView(ListView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Listado de Ventas'
         return context
-
 
 class VentaUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, UpdateView):
     model = Venta
@@ -465,7 +463,6 @@ class VentaUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, Updat
         context['detalles'] = json.dumps(self.get_detalle_productos())
         return context
 
-
 class VentaFacturaPdfView(View):
 
     def get(self, request, *args, **kwargs):
@@ -488,3 +485,111 @@ class VentaFacturaPdfView(View):
             track = traceback.format_exc()
             print(track)
             return HttpResponseRedirect(reverse_lazy('ListaVenta'))
+
+
+class ClienteListView(ListView):
+    model = Cliente
+    template_name = 'cliente/clientes.html'
+
+    @method_decorator(csrf_exempt)
+    #@method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            action = request.POST['action']
+            if action == 'searchdata':
+                data = []
+                for i in Cliente.objects.all():
+                    data.append(i.toJSON())
+            else:
+                data['error'] = 'Ha ocurrido un error'
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data, safe=False)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Clientes'
+        return context
+
+class ClienteCreateView(CreateView):
+
+
+    model = Cliente
+    form_class = nuevo_cliente_form
+    template_name = 'cliente/cliente_form.html'
+    success_url = reverse_lazy("{% url 'Clientes' %}")
+
+    @method_decorator(csrf_exempt)
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            action = request.POST['action']
+            if action == 'add':
+                form = self.get_form()
+                data = form.save()
+            else:
+                data['error'] = 'No ha ingresado a ninguna opción'
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Añadir un Cliente'
+        context['action'] = 'add'
+        return context
+
+class ClienteUpdateView(UpdateView):
+    model = Cliente
+    form_class = nuevo_cliente_form
+    template_name = 'cliente/cliente_form.html'
+    success_url = reverse_lazy('Clientes')
+
+    @method_decorator(csrf_exempt)
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        data = {}
+        try:
+            action = request.POST['action']
+            if action == 'edit':
+                form = self.get_form()
+                data = form.save()
+            else:
+                data['error'] = 'No ha ingresado a ninguna opción'
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Editar Cliente'
+        context['action'] = 'edit'
+        return context
+
+
+class ClienteDeleteView(DeleteView):
+    model = Cliente
+    template_name = 'cliente/eliminar_cliente.html'
+    success_url = reverse_lazy('Clientes')
+
+    @method_decorator(csrf_exempt)
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Eliminar un Cliente'
+        return context

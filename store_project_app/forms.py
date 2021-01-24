@@ -79,3 +79,23 @@ class nueva_venta_form(ModelForm):
         #     'fecha_venta': widgets.DateInput(format='%Y-%m-%d', attrs={'value': datetime.now().strftime('%Y-%m-%d'), }),
 
         # }
+
+
+class nuevo_cliente_form(ModelForm):
+
+    class Meta:
+        model = Cliente
+        fields = '__all__'
+
+    def save(self, commit=True):
+        data = {}
+        form = super()
+        try:
+            if form.is_valid():
+                form.save()
+            else:
+                data['error'] = form.errors
+        except Exception as e:
+            data['error'] = str(e)
+        return data
+
