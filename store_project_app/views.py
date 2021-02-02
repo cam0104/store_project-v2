@@ -78,6 +78,7 @@ class CategoriaListView(LoginRequiredMixin, ListView):
     model = Categoria
     template_name = 'categoria/categorias.html'
 
+
     @method_decorator(csrf_exempt)
     # @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
@@ -289,7 +290,7 @@ class ProductoDeleteView(DeleteView):
         context['title'] = 'Eliminar un Producto'
         return context
 
-class VentaCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, CreateView):
+class VentaCreateView(LoginRequiredMixin, CreateView):
     model = Venta
     form_class = nueva_venta_form
     template_name = 'venta/venta_form.html'
@@ -577,7 +578,6 @@ class ClienteUpdateView(UpdateView):
         context['title'] = 'Editar Cliente'
         context['action'] = 'edit'
         return context
-
 
 class ClienteDeleteView(DeleteView):
     model = Cliente

@@ -17,12 +17,13 @@
             <br>
             <br>
             <hr class="sidebar-divider my-0">
-
+            {% if request.user.is_superuser %}
             <li class="nav-item active">
                 <a class="nav-link" href="{% url 'Estadisticas' %}">
                     <i class="fas fa-chart-pie"></i>
-                    <span>Estadisticas</span></a>
+                    <span>Estadísticas</span></a>
             </li>
+            {% endif %}
 
             <hr class="sidebar-divider">
 

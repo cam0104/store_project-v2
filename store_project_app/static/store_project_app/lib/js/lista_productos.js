@@ -3,6 +3,9 @@ $(function () {
     var tblproductos = $('#dataTable').DataTable({
         responsive: true,
         autoWidth: false,
+        language: {
+            url: '/static/store_project_app/vendor/datatables/spanish.txt'  
+        },
         destroy: true,
         deferRender: true,
         ajax: {

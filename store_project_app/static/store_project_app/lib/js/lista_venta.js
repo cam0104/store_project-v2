@@ -17,6 +17,9 @@ $(function () {
     var tblVenta = $('#dataTable').DataTable({
         responsive: true,
         autoWidth: false,
+        language: {
+            url: '/static/store_project_app/vendor/datatables/spanish.txt'  
+        },
         destroy: true,
         deferRender: true,
         ajax: {
@@ -44,11 +47,31 @@ $(function () {
                 orderable: false,
                 render: function (data, type, row) {
                     var botones = '<a rel="detalle" class="btn btn-success btn-circle"><i class="fas fa-search"></i></a> ';
-                    botones += '<a href="editar_venta/' + row.id_venta + '/" class="btn btn-warning btn-circle"><i class="fas fa-edit"></i></a> ';
                     botones += '<a href="eliminar_categoria/' + row.id_categoria + '/" class="btn btn-danger btn-circle"><i class="fas fa-trash"></i></a> '
                     botones += '<a href="/factura_venta/' + row.id_venta + '/" target="_blank" class="btn btn-info btn-circle"><i class="fas fa-file-pdf"></i></a> '
                     return botones
                 }
+            },
+            {
+                targets: [-3],
+                class: 'text-center',
+                orderable: false,
+                render: function (data, type, row) {
+                    if (data == "Contado") {
+                        return '<span class="badge badge-success">' + data + '</span>'
+                    }
+                    return '<span class="badge badge-danger">' + data + '</span>'
+                    
+                }
+            },
+
+            {
+                targets: [-2],
+                class: 'text-center',
+                orderable: false,
+                render: function (data, type, row) {
+                    return '$' + parseFloat(data).toFixed(0);
+                }, 
             },
         ],
         initComplete: function (settings, json) {
@@ -65,6 +88,9 @@ $(function () {
         $('#tblDetalles').DataTable({
             responsive: true,
             autoWidth: false,
+            language: {
+                url: '/static/store_project_app/vendor/datatables/spanish.txt'  
+            },
             destroy: true,
             deferRender: true,
             ajax: {

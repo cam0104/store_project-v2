@@ -43,10 +43,12 @@
                 </div>
               </a>
               <div class="dropdown-menu  dropdown-menu-right ">
-                <a href="#" class="dropdown-item">
-                  <i class="ni ni-settings-gear-65"></i>
+                {% if request.user.is_superuser %}
+                <a href="{% url 'admin:index' %}" class="dropdown-item">
+                  <i class="fas fa-cog"></i>
                   <span>Ajustes</span>
                 </a>
+                {% endif %}
                 <div class="dropdown-divider"></div>
                 <a href="{% url 'Logout' %}" class="dropdown-item">
                   <i class="fas fa-sign-out-alt"></i>

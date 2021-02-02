@@ -1,3 +1,4 @@
+from django.contrib.auth.models import AbstractUser
 from store_project.models import BaseModel
 from django.db import models
 from django.forms import ModelForm
@@ -176,4 +177,8 @@ class Historial_Pago(models.Model):
     fecha = models.DateTimeField()
     monto = models.IntegerField()
 
+# class User(AbstractUser):
+#     def toJSON(self):
+#         item = model_to_dict(self,exclude=[''])
+#         return
 

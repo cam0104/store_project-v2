@@ -31,6 +31,9 @@ var ventas = {
         tblProductos = $('#dataTable').DataTable({
             responsive: true,
             autoWidth: false,
+            language: {
+                url: '/static/store_project_app/vendor/datatables/spanish.txt'  
+            },
             data: this.items.productos,
             destroy: true,
             deferRender: true,

@@ -16,10 +16,11 @@ class ValidatePermissionRequiredMixin(object):
     url_redirect = None
 
     def get_perms(self):
+        perms = []
         if isinstance(self.permission_required,str):
-            perms = (self.permission_required,)
+            perms.append(self.permission_required)
         else:
-            perms = self.permission_required
+            perms = list(self.permission_required)
         return perms
 
     def get_url_redirect(self):

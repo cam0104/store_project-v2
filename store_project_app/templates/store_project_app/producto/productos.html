@@ -1,4 +1,11 @@
-{% extends "store_project_app/producto/listar.html" %}
+{% extends "store_project_app/listar.html" %}
+{% load static %}
+
+{% block head %}
+
+<script src="{% static 'store_project_app/lib/js/lista_productos.js' %}"></script>
+
+{% endblock %}
 
 
 {% block columns %}
