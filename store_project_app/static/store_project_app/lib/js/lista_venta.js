@@ -47,7 +47,9 @@ $(function () {
                 orderable: false,
                 render: function (data, type, row) {
                     var botones = '<a rel="detalle" class="btn btn-success btn-circle"><i class="fas fa-search"></i></a> ';
-                    botones += '<a href="eliminar_categoria/' + row.id_categoria + '/" class="btn btn-danger btn-circle"><i class="fas fa-trash"></i></a> '
+                    if (window.location.pathname == '/ventas'){
+                        botones += '<a href="anular_venta/' + row.id_venta + '/" class="btn btn-danger btn-circle"><i class="fas fa-times"></i></a> '
+                    }
                     botones += '<a href="/factura_venta/' + row.id_venta + '/" target="_blank" class="btn btn-info btn-circle"><i class="fas fa-file-pdf"></i></a> '
                     return botones
                 }

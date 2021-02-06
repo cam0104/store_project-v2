@@ -55,8 +55,26 @@
                             
                         </div>
                         <div class="card-body">
-                            <input type="field" value="{{request.user.id}}" name="empleado" id="empleado">
-                            {{form|crispy}}
+                            <!-- <input type="field" value="{{request.user.id}}" name="empleado" id="empleado"> -->
+                            <div class="form-group">
+                                <label form="fecha_venta">Fecha de Venta</label>
+                                {{form.fecha_venta}}
+                            </div>
+                            
+                            <div class="form-group">
+                                <label form="cliente">Cliente</label>
+                                {{form.id_cliente}}
+                            </div>
+
+                            <div class="form-group">
+                                <label form="forma_pago">Forma de Pago</label>
+                                {{form.forma_pago}}
+                            </div>
+
+                            <div class="form-group">
+                                <label form="precio_total">Precio Total</label>
+                                {{form.precio_total}}
+                            </div>  
                         </div>
                     </div>
                 </div>
@@ -72,8 +90,8 @@
 <script>
     //var detalles = {{detalles}}
 
-    var detalles = JSON.parse('{{detalles|safe}}');
-    console.log(detalles);
+    // var detalles = JSON.parse('{{detalles|safe}}');
+    // console.log(detalles);
 </script>
 {% endblock %}
 

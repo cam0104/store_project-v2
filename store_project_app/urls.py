@@ -22,9 +22,10 @@ urlpatterns = [
 
     path('ventas', views.VentaListView.as_view(), name = 'ListaVenta'),
     path('crear_venta', views.VentaCreateView.as_view(), name = 'Venta'),
-    path('editar_venta/<int:pk>/', views.VentaUpdateView.as_view(), name = 'ListaVenta'),
 
     path('factura_venta/<int:pk>/', views.VentaFacturaPdfView.as_view(), name = 'FacturaVenta'),
+    path('anular_venta/<int:pk>/', views.VentaUpdateView.as_view(), name = 'AnularVenta'),
+    path('ventas_anuladas', views.VentaAnuladaListView.as_view(), name = 'ListaVentaAnulada'),
 
 
     #path('usuarios', views.UsuarioListView.as_view(), name = 'Usuarios'),

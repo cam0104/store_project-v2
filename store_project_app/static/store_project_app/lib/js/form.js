@@ -6,6 +6,7 @@ var ventas = {
         fecha_venta: '',
         forma_pago: '',
         precio_total: 0.00,
+        anulada: '',
         productos: []
     },
 
@@ -200,6 +201,7 @@ $(function () {
         ventas.items.fecha_venta = $('input[name="fecha_venta"]').val();
         ventas.items.forma_pago = $('select[name="forma_pago"]').val();
         ventas.items.precio_total = $('input[name="precio_total"]').val();
+
         console.log(ventas.items)
 
         var parametros = new FormData();

@@ -68,6 +68,7 @@ class Venta(models.Model):
     forma_pago = models.ForeignKey(Metodo_Pago, on_delete=models.CASCADE)
     precio_total = models.DecimalField(
         default=0.00, max_digits=9, decimal_places=2)
+    is_anulada = models.BooleanField(default=False)
 
     def __str__(self):
         return self.id_cliente.nombre

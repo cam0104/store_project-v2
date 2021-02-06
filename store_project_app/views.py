@@ -56,7 +56,7 @@ class EstadisticasView(TemplateView):
         try:
             for p in Producto.objects.all():
                 total = Detalle_Venta.objects.filter(
-                    id_venta__fecha_venta__year=ano, id_venta__fecha_venta__month=mes, id_producto=p.id_producto).aggregate(
+                    id_venta__fecha_venta__year=ano, id_venta__fecha_venta__month=mes, id_producto=p.id_producto, id_venta__is_anulada = False).aggregate(
                         resultado=Coalesce(Sum('cantidad'), 0)).get('resultado')
                 data.append({
                     'name': p.nombre,
@@ -373,7 +373,7 @@ class VentaListView(ListView):
             action = request.POST['action']
             if action == 'searchdata':
                 data = []
-                for i in Venta.objects.all():
+                for i in Venta.objects.filter(is_anulada = False):
                     data.append(i.toJSON())
             elif action == 'searchdata_detalle':
                 data = []
@@ -390,79 +390,6 @@ class VentaListView(ListView):
         context['title'] = 'Listado de Ventas'
         return context
 
-class VentaUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, UpdateView):
-    model = Venta
-    form_class = nueva_venta_form
-    template_name = 'venta/venta_form.html'
-    success_url = reverse_lazy('Index')
-    permission_required = 'store_project_app.change_categoria'
-    url_redirect = success_url
-
-    @method_decorator(csrf_exempt)
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
-
-    def post(self, request, *args, **kwargs):
-        data = {}
-        try:
-            action = request.POST['action']
-            if action == 'autocomplete':
-                productos = Producto.objects.filter(
-                    nombre__icontains=request.POST['term'])[0:10]
-                for i in productos:
-                    data = []
-                    item = i.toJSON()
-                    item['value'] = i.nombre
-                    data.append(item)
-
-            elif action == 'edit':
-                ventas = json.loads(request.POST['ventas'])
-                venta = Venta()
-                venta.id_cliente = Cliente.objects.get(id_cliente = ventas['id_cliente'])
-                venta.id_empleado = Empleado.objects.get(id_empleado = ventas['id_empleado'])
-                venta.fecha_venta = ventas['fecha_venta']
-                venta.forma_pago = Metodo_Pago.objects.get(id_metodo_pago = ventas['forma_pago'])
-                venta.precio_total = float(ventas['precio_total'])
-                venta.save()
-
-                for i in ventas['productos']:
-                    detalle_venta = Detalle_Venta()
-                    detalle_venta.id_venta = Venta.objects.get(id_venta = venta.id_venta)
-                    detalle_venta.id_producto = Producto.objects.get(id_producto = i['id_producto'])
-                    detalle_venta.cantidad = int(i['cantidad'])
-                    detalle_venta.subtotal = float(i['subtotal'])
-                    detalle_venta.save()
-            else:
-                data['error'] = 'No ha ingresado a ninguna opción'
-        except Exception as e:
-            data['error'] = str(e)
-            track = traceback.format_exc()
-            print(track)
-        return JsonResponse(data, safe=False)
-
-    def get_detalle_productos(self):
-        data = []
-        try:
-            for i in Detalle_Venta.objects.filter(id_venta=self.kwargs['pk']):
-                item = i.id_producto.toJSON()
-                item['cantidad'] = i.cantidad
-
-                data.append(item)
-        except Exception as e:
-            data['error'] = str(e)
-            track = traceback.format_exc()
-            print(track)
-
-        return data
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Edición de una Venta'
-        context['entity'] = 'Venta'
-        context['list_url'] = self.success_url
-        context['action'] = 'edit'
-        context['detalles'] = json.dumps(self.get_detalle_productos())
-        return context
 
 class VentaFacturaPdfView(View):
 
@@ -592,4 +519,71 @@ class ClienteDeleteView(DeleteView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Eliminar un Cliente'
+        return context
+
+
+class VentaUpdateView(UpdateView):
+
+    model = Venta
+    form_class = nueva_venta_form
+    template_name = 'venta/anular_venta.html'
+    success_url = reverse_lazy('Clientes')
+
+    @method_decorator(csrf_exempt)
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        data = {}
+        try:
+            action = request.POST['action']
+            if action == 'edit':
+                form = self.get_form()
+                data = form.save()
+            else:
+                data['error'] = 'No ha ingresado a ninguna opción'
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data, safe=False)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Anular Venta'
+        context['action'] = 'edit'
+        return context
+
+
+class VentaAnuladaListView(ListView):
+
+    model = Venta
+    template_name = 'venta/lista_ventas_anuladas.html'
+
+    @method_decorator(csrf_exempt)
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            action = request.POST['action']
+            if action == 'searchdata':
+                data = []
+                for i in Venta.objects.filter(is_anulada = True):
+                    data.append(i.toJSON())
+            elif action == 'searchdata_detalle':
+                data = []
+                for i in Detalle_Venta.objects.filter(id_venta=request.POST['id']):
+                    data.append(i.toJSON())
+            else:
+                data['error'] = 'Ha ocurrido un error'
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data, safe=False)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Listado de Ventas Anuladas'
         return context

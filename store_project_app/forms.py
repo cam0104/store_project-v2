@@ -58,27 +58,39 @@ class nueva_venta_form(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.fields['id_empleado'].widget.attrs = {
-            'type' : 'field',
-
-        }
-
-        self.fields['fecha_venta'].widget.attrs = {
-            'readonly': True
-        }
-
-        self.fields['precio_total'].widget.attrs = {
-            'readonly': True
-        }
-
     class Meta:
         model = Venta
         fields = '__all__'
+        widgets = {
+            'id_cliente': widgets.Select(
+                attrs={
+                    'class': 'form-control',
+
+                }
+            ),
+
+            'fecha_venta': widgets.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'readonly': True
+                }
+            ),
+
+            'forma_pago': widgets.Select(
+                attrs={
+                    'class': 'form-control',
+                }
+            ),
+
+            'precio_total': widgets.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'readonly': True
+                }
+            )
+        }
         exclude = ['creacion_user', 'actualizacion_usuario']
 
-        #     'fecha_venta': widgets.DateInput(format='%Y-%m-%d', attrs={'value': datetime.now().strftime('%Y-%m-%d'), }),
-
-        # }
 
 
 class nuevo_cliente_form(ModelForm):
@@ -98,4 +110,3 @@ class nuevo_cliente_form(ModelForm):
         except Exception as e:
             data['error'] = str(e)
         return data
-
