@@ -44,11 +44,21 @@ $(function () {
                 orderable: false,
                 render: function (data, type, row) {
                     var now = moment().format('YYYY-MM-DD');
-                    var parseDate = Date.parse(data)
-                    var operacion = now -parseDate
-                    var dias = (Math.round(operacion/ (1000*60*60*24)))
+                    var date = moment(data).format('YYYY-MM-DD');
+                    
+                    console.log(typeof(now));
+                    console.log(typeof(date));
+                    
+                    // console.log("otra");
+                    // console.log(typeof(date));
+                    // console.log(date);
+                    // console.log("ope")
+                    // console.log(date - now)
                    
-                    return dias
+                    // var operacion = now -parseDate
+                    // var dias = (Math.round(operacion/ (1000*60*60*24)))
+                   
+                    return now
                 }, 
             },
             {

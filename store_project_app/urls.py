@@ -26,6 +26,7 @@ urlpatterns = [
     path('factura_venta/<int:pk>/', views.VentaFacturaPdfView.as_view(), name = 'FacturaVenta'),
     path('anular_venta/<int:pk>/', views.VentaUpdateView.as_view(), name = 'AnularVenta'),
     path('ventas_anuladas', views.VentaAnuladaListView.as_view(), name = 'ListaVentaAnulada'),
+    path('ventas_por_cobrar', views.VentaPorCobrarListView.as_view(), name = 'VentaPorCobrar')
 
 
     #path('usuarios', views.UsuarioListView.as_view(), name = 'Usuarios'),

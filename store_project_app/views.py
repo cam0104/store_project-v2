@@ -587,3 +587,37 @@ class VentaAnuladaListView(ListView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Listado de Ventas Anuladas'
         return context
+
+
+class VentaPorCobrarListView(ListView):
+
+    model = Venta
+    template_name = 'venta/ventas_por_cobrar.html'
+
+    @method_decorator(csrf_exempt)
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            action = request.POST['action']
+            if action == 'searchdata':
+                data = []
+                for i in Venta.objects.filter(is_anulada = False, forma_pago__id_metodo_pago__contains = 2):
+                    data.append(i.toJSON())
+            elif action == 'searchdata_detalle':
+                data = []
+                for i in Detalle_Venta.objects.filter(id_venta=request.POST['id']):
+                    data.append(i.toJSON())
+            else:
+                data['error'] = 'Ha ocurrido un error'
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data, safe=False)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Listado de Ventas'
+        return context

@@ -59,7 +59,7 @@
         e.preventDefault();
         var parametros = $(this).serializeArray();
         submit(window.location.pathname, parametros, function () {
-            location.href = "{% url 'Productos' %}";
+            location.href = "{% url 'ListaVentaAnulada' %}";
 
         });
     });
