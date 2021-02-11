@@ -4,6 +4,8 @@ from django.db import models
 from django.forms import ModelForm
 from django.forms import model_to_dict
 from datetime import datetime
+from django.conf import settings
+from django.db.models.deletion import CASCADE
 from crum import get_current_user
 
 class Metodo_Pago(models.Model):
@@ -63,12 +65,14 @@ class Cliente(models.Model):
 class Venta(models.Model):
     id_venta = models.AutoField(primary_key=True)
     id_cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE,blank=True, null=True)
-    id_empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE,blank=True, null=True)
+    ##id_empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE,blank=True, null=True)
     fecha_venta = models.DateField(default=datetime.now().strftime('%Y-%m-%d'))
     forma_pago = models.ForeignKey(Metodo_Pago, on_delete=models.CASCADE)
     precio_total = models.DecimalField(
         default=0.00, max_digits=9, decimal_places=2)
     is_anulada = models.BooleanField(default=False)
+    creacion_user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=CASCADE, related_name='creacion_user', null=True, blank=True)
 
     def __str__(self):
         return self.id_cliente.nombre
@@ -85,7 +89,7 @@ class Venta(models.Model):
     def toJSON(self):
         item = model_to_dict(self)
         item['cliente'] = self.id_cliente.toJSON()
-        item['empleado'] = self.id_empleado.toJSON()
+        #item['empleado'] = self.creacion_user.toJSON()
         item['forma_pago'] = self.forma_pago.toJSON()
         return item
 

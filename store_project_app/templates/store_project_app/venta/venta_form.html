@@ -55,7 +55,6 @@
                             
                         </div>
                         <div class="card-body">
-                            <!-- <input type="field" value="{{request.user.id}}" name="empleado" id="empleado"> -->
                             <div class="form-group">
                                 <label form="fecha_venta">Fecha de Venta</label>
                                 {{form.fecha_venta}}
@@ -64,11 +63,6 @@
                             <div class="form-group">
                                 <label form="cliente">Cliente</label>
                                 {{form.id_cliente}}
-                            </div>
-
-                            <div class="form-group">
-                                <label form="cliente">Empleado</label>
-                                {{form.id_empleado}}
                             </div>
 
                             <div class="form-group">
@@ -92,12 +86,7 @@
         </div>
     </div>
 </form>
-<script>
-    //var detalles = {{detalles}}
 
-    // var detalles = JSON.parse('{{detalles|safe}}');
-    // console.log(detalles);
-</script>
 {% endblock %}
 
 {% block js %}

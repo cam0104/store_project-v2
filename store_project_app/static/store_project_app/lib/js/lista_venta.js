@@ -34,7 +34,7 @@ $(function () {
 
             { "data": "id_venta" },
             { "data": "cliente.nombre" },
-            { "data": "empleado.nombre" },
+            { "data": "creacion_user" },
             { "data": "fecha_venta" },
             { "data": "forma_pago.nombre" },
             { "data": "precio_total" },

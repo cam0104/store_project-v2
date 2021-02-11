@@ -2,7 +2,7 @@ var tblProductos;
 var ventas = {
     items: {
         id_cliente: '',
-        id_empleado: '',
+        //id_empleado: '',
         fecha_venta: '',
         forma_pago: '',
         precio_total: 0.00,
@@ -196,8 +196,8 @@ $(function () {
 
         e.preventDefault();
 
-        ventas.items.id_cliente = $('select[name="id_empleado"]').val();
-        ventas.items.id_empleado = $('select[name="id_empleado"]').val();
+        ventas.items.id_cliente = $('select[name="id_cliente"]').val();
+        //ventas.items.id_empleado = $('select[name="id_empleado"]').val();
         ventas.items.fecha_venta = $('input[name="fecha_venta"]').val();
         ventas.items.forma_pago = $('select[name="forma_pago"]').val();
         ventas.items.precio_total = $('input[name="precio_total"]').val();

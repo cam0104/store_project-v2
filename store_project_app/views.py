@@ -73,7 +73,6 @@ class EstadisticasView(TemplateView):
         context['productos_mas_vendidos'] = self.productos_mas_vendidos()
         return context
 
-
 class CategoriaListView(LoginRequiredMixin, ListView):
     model = Categoria
     template_name = 'categoria/categorias.html'
@@ -102,7 +101,6 @@ class CategoriaListView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Categoria'
         return context
-
 
 class CategoriaCreateView(CreateView):
 
@@ -134,7 +132,6 @@ class CategoriaCreateView(CreateView):
         context['action'] = 'add'
         return context
 
-
 class CategoriaUpdateView(UpdateView):
     model = Categoria
     form_class = nueva_categoria_form
@@ -165,7 +162,6 @@ class CategoriaUpdateView(UpdateView):
         context['action'] = 'edit'
         return context
 
-
 class CategoriaDeleteView(DeleteView):
     model = Categoria
     template_name = 'categoria/eliminar_categoria.html'
@@ -180,7 +176,6 @@ class CategoriaDeleteView(DeleteView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Eliminar una Categoria'
         return context
-
 
 class ProductosListView(ListView):
 
@@ -210,7 +205,6 @@ class ProductosListView(ListView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Listado de Productos'
         return context
-
 
 class ProductoCreateView(CreateView):
 
@@ -242,7 +236,6 @@ class ProductoCreateView(CreateView):
         context['title'] = 'Añadir un producto'
         context['action'] = 'add'
         return context
-
 
 class ProductoUpdateView(UpdateView):
     model = Producto
@@ -320,8 +313,8 @@ class VentaCreateView(LoginRequiredMixin, CreateView):
                 venta = Venta()
                 venta.id_cliente = Cliente.objects.get(
                     id_cliente=ventas['id_cliente'])
-                venta.id_empleado = Empleado.objects.get(
-                    id_empleado=ventas['id_empleado'])
+                # venta.id_empleado = Empleado.objects.get(
+                #     id_empleado=ventas['id_empleado'])
                 venta.fecha_venta = ventas['fecha_venta']
                 venta.forma_pago = Metodo_Pago.objects.get(
                     id_metodo_pago=ventas['forma_pago'])
@@ -382,14 +375,14 @@ class VentaListView(ListView):
             else:
                 data['error'] = 'Ha ocurrido un error'
         except Exception as e:
-            data['error'] = str(e)
+            track = traceback.format_exc()
+            print(track)
         return JsonResponse(data, safe=False)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Listado de Ventas'
         return context
-
 
 class VentaFacturaPdfView(View):
 
@@ -413,7 +406,6 @@ class VentaFacturaPdfView(View):
             track = traceback.format_exc()
             print(track)
             return HttpResponseRedirect(reverse_lazy('ListaVenta'))
-
 
 class ClienteListView(ListView):
     model = Cliente
@@ -521,7 +513,6 @@ class ClienteDeleteView(DeleteView):
         context['title'] = 'Eliminar un Cliente'
         return context
 
-
 class VentaUpdateView(UpdateView):
 
     model = Venta
@@ -554,7 +545,6 @@ class VentaUpdateView(UpdateView):
         context['action'] = 'edit'
         return context
 
-
 class VentaAnuladaListView(ListView):
 
     model = Venta
@@ -580,7 +570,8 @@ class VentaAnuladaListView(ListView):
             else:
                 data['error'] = 'Ha ocurrido un error'
         except Exception as e:
-            data['error'] = str(e)
+            track = traceback.format_exc()
+            print(track)
         return JsonResponse(data, safe=False)
 
     def get_context_data(self, **kwargs):

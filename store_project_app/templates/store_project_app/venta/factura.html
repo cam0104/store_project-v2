@@ -45,7 +45,7 @@
     <b>FACTURA:</b> {{ venta.id_venta }}<br>
     <b>FECHA DE VENTA:</b> {{ venta.fecha_venta }}<br>
     <b>CLIENTE:</b> {{ venta.id_cliente.nombre|upper }}<br>
-    <b>VENDEDOR:</b> {{ venta.id_empleado.nombre|upper }}<br>
+    <b>VENDEDOR:</b> {{ venta.creacion_user.get_full_name|upper }}<br>
 
 
 </p>
