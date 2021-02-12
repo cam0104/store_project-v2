@@ -87,10 +87,13 @@ class nueva_venta_form(ModelForm):
                     'class': 'form-control',
                     'readonly': True
                 }
-            )
+            ),
+
+
+
+
         }
         exclude = ['creacion_user', 'actualizacion_usuario']
-
 
 
 class nuevo_cliente_form(ModelForm):

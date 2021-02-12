@@ -29,7 +29,31 @@
                     </ul>
                 </div>
                 {% endif %}
-                {{form|crispy}}
+                <div class="form-group">
+                    <label form="fecha_venta">Fecha de Venta</label>
+                    {{form.fecha_venta}}
+                </div>
+                
+                <div class="form-group">
+                    <label form="cliente">Cliente</label>
+                    {{form.id_cliente}}
+                </div>
+
+                <div class="form-group">
+                    <label form="forma_pago">Forma de Pago</label>
+                    {{form.forma_pago}}
+                </div>
+
+                <div class="form-group">
+                    <label form="precio_total">Precio Total</label>
+                    {{form.precio_total}}
+                </div> 
+
+                <div class="form-group">
+                    <label form="is_anulada">¿Desea anular la venta?  Sí</label>
+                    {{form.is_anulada}}
+                </div> 
+
             </div>
         </div>
         <div class="card-footer">

@@ -23,7 +23,6 @@ $(function () {
             { "data": "stock" },
             { "data": "precio" },
             { "data": "fecha_vencimiento" },
-            { "data": "fecha_vencimiento" },
             { "data": "botones" },
         ],
         columnDefs: [
@@ -38,31 +37,31 @@ $(function () {
                 },
             },
 
-            {
-                targets: [-2],
-                class: 'text-center',
-                orderable: false,
-                render: function (data, type, row) {
-                    var now = moment().format('YYYY-MM-DD');
-                    var date = moment(data).format('YYYY-MM-DD');
+            // {
+            //     targets: [-2],
+            //     class: 'text-center',
+            //     orderable: false,
+            //     render: function (data, type, row) {
+            //         var now = moment().format('YYYY-MM-DD');
+            //         var date = moment(data).format('YYYY-MM-DD');
                     
-                    console.log(typeof(now));
-                    console.log(typeof(date));
+            //         console.log(typeof(now));
+            //         console.log(typeof(date));
                     
-                    // console.log("otra");
-                    // console.log(typeof(date));
-                    // console.log(date);
-                    // console.log("ope")
-                    // console.log(date - now)
+            //         // console.log("otra");
+            //         // console.log(typeof(date));
+            //         // console.log(date);
+            //         // console.log("ope")
+            //         // console.log(date - now)
                    
-                    // var operacion = now -parseDate
-                    // var dias = (Math.round(operacion/ (1000*60*60*24)))
+            //         // var operacion = now -parseDate
+            //         // var dias = (Math.round(operacion/ (1000*60*60*24)))
                    
-                    return now
-                }, 
-            },
+            //         return now
+            //     }, 
+            // },
             {
-                targets: [-4],
+                targets: [-3],
                 class: 'text-center',
                 orderable: false,
                 render: function (data, type, row) {
@@ -73,7 +72,7 @@ $(function () {
             },
 
             {
-                targets: [-5],
+                targets: [-4],
                 class: 'text-center',
                 orderable: false,
                 render: function (data, type, row) {
