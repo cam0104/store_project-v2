@@ -3,21 +3,22 @@ from django.contrib.auth.decorators import permission_required
 from django.shortcuts import redirect
 from django.urls.base import reverse_lazy
 
+
 class IsSuperuserMixin(object):
-    
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_superuser:
             return super().dispatch(request, *args, **kwargs)
-        return redirect('Estadisticas')
-    
+        return redirect("Estadisticas")
+
+
 class ValidatePermissionRequiredMixin(object):
 
-    permission_required = ''
+    permission_required = ""
     url_redirect = None
 
     def get_perms(self):
         perms = []
-        if isinstance(self.permission_required,str):
+        if isinstance(self.permission_required, str):
             perms.append(self.permission_required)
         else:
             perms = list(self.permission_required)
@@ -25,7 +26,7 @@ class ValidatePermissionRequiredMixin(object):
 
     def get_url_redirect(self):
         if self.url_redirect is None:
-            return reverse_lazy('Login')
+            return reverse_lazy("Login")
         self.url_redirect
 
     def dispatch(self, request, *args, **kwargs):

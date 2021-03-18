@@ -10,6 +10,4 @@ admin.site.register(Metodo_Pago)
 admin.site.register(Cliente)
 
 
-
-
 # Register your models here.

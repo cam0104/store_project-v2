@@ -19,12 +19,8 @@ from home_page import views
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-
-    path('', views.IndexView.as_view(), name = 'Index'),
-    path('', include('store_project_app.urls')),
-    path('', include('login.urls')),
-
-
-
+    path("admin/", admin.site.urls),
+    path("", views.IndexView.as_view(), name="Index"),
+    path("", include("store_project_app.urls")),
+    path("", include("login.urls")),
 ]
